@@ -1,59 +1,62 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
-import { AuthUserContext } from "../Session";
 import SignOutButton from "../SignOut";
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 
-const Navigation = ({ authUser }) =>
-  authUser ? (
-    <NavigationAuth authUser={authUser} />
-  ) : (
-    <NavigationNonAuth />
-  );
+const Navigation = ({ authUser }) => (
+  authUser ? <NavigationAuth authUser={authUser} /> : <NavigationNonAuth />
+);
 
 const NavigationAuth = ({ authUser }) => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
+  <DropdownButton alignRight title="menu" id="dropdown-menu-align-right" className="navigation">
+    <Dropdown.Item href={ROUTES.LANDING}>
+      Landing
+    </Dropdown.Item>
+    <Dropdown.Item href={ROUTES.HOME}>
+      Home
+    </Dropdown.Item>
+    <Dropdown.Item href={ROUTES.ACCOUNT}>
+      Account
+    </Dropdown.Item>
     {authUser.roles.includes(ROLES.ADMIN) && (
-      <li>
-        <Link to={ROUTES.ADMIN}>Admin</Link>
-      </li>
+      <Dropdown.Item href={ROUTES.ADMIN}>
+        Admin
+      </Dropdown.Item>
     )}
     {authUser.roles.includes(ROLES.ADMIN) && (
-      <li>
-        <Link to={ROUTES.SIGN_UP}>Create users</Link>
-      </li>
+      <Dropdown.Item href={ROUTES.SIGN_UP}>
+        Create users
+      </Dropdown.Item>
     )}
-    <li>
+    <div className="menuBottom">
+      <Dropdown.Item className="aboutButton">
+        ABOUT
+      </Dropdown.Item>
+      <Dropdown.Item className="exportButton">
+        EXPORT
+      </Dropdown.Item>
       <SignOutButton />
-    </li>
-  </ul>
+    </div>
+    </DropdownButton>
 );
 
 const NavigationNonAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
-  </ul>
+  <DropdownButton alignRight title="menu" id="dropdown-menu-align-right" className="navigation">
+    <Dropdown.Item href={ROUTES.LANDING}>
+      Landing
+    </Dropdown.Item>
+    <Dropdown.Item href={ROUTES.SIGN_IN}>
+      Sign In
+    </Dropdown.Item>
+  </DropdownButton>
 );
 
 const mapStateToProps = state => ({
-  authUser: state.sessionState.authUser,
+  authUser: state.sessionState.authUser
 });
 
 export default connect(mapStateToProps)(Navigation);

@@ -1,14 +1,89 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
   
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-      monospace;
-  }
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+button {
+  border-radius: 0 !important;
+}
+
+.topMenu {
+  display: flex;
+  width: 100%;
+}
+
+.variables {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+  background-color: #532065;
+}
+
+.navigation {
+  width: 20%;
+  background-color: hsla(280, 59%, 18%, 0.8);
+}
+
+#dropdown-menu-align-right {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+}
+
+.dropdown-menu.show.dropdown-menu-right {
+  text-align: center;
+  background-color: hsla(280, 59%, 18%, 0.8);
+}
+
+/* The bottom of the menu below */
+
+.menuBottom {
+  display: flex;
+  justify-content: space-evenly;
+  width: 400px;
+}
+
+.aboutButton {
+  background-color: hsla(167, 65%, 55%, 0.25);
+  padding: 10px;
+}
+
+.aboutButton:hover {
+  background-color: hsla(167, 65%, 55%, 1);
+  padding: 10px;
+}
+
+.exportButton {
+  background-color: hsla(89, 100%, 42%, 0.25);
+  padding: 10px;
+}
+
+.exportButton:hover {
+  background-color: hsla(89, 100%, 42%, 1);
+  padding: 10px;
+}
+
+.signOutButton {
+  background-color: hsla(0, 76%, 50%, 0.25);
+  padding: 10px;
+}
+
+.signOutButton:hover {
+  background-color: hsla(0, 76%, 50%, 1);
+  padding: 10px;
+}

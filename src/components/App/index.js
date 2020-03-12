@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navigation from '../Navigation';
+import Variables from '../Variables';
 import LandingPage from '../Landing';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
@@ -16,9 +17,10 @@ import { withAuthentication } from '../Session';
 const App = () => (
   <Router>
     <div>
-      <Navigation />
-
-      <hr />
+      <div className="topMenu">
+        <Variables />
+        <Navigation />
+      </div>
 
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />

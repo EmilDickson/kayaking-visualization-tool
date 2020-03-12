@@ -11,6 +11,9 @@ class HomePage extends Component {
     this.props.firebase.users().on("value", snapshot => {
       this.props.onSetUsers(snapshot.val());
     });
+    this.props.firebase.allData().on("value", snapshot => {
+      console.log(snapshot.val())
+    })
   }
 
   componentWillUnmount() {

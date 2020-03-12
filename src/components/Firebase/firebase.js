@@ -69,6 +69,10 @@ class Firebase {
   message = uid => this.db.ref(`messages/${uid}`);
 
   messages = () => this.db.ref('messages');
+
+  // *** Data API (simply fetches all data for now...) ***
+
+  allData = () => this.db.ref('data');
 }
 
 export default Firebase;
