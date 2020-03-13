@@ -99,3 +99,19 @@ button {
   background-color: hsla(0, 76%, 50%, 1);
   padding: 10px;
 }
+
+.compareAllContainer {
+  display: flex;
+}
+
+.mainVisualization {
+  width: 100%;
+}
+
+.mapContainer {
+  width: 300px;
+  height: 600px;
+  transform: rotate(90deg);
+  margin-top: -10%;
+  margin-right: 11.5%;
+}

@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 
 import { withFirebase } from "../Firebase";
+import BoatRoute from '../BoatRoute';
 
 class CompareAll extends Component {
     componentDidMount() {
         this.props.firebase.allData().on("value", snapshot => {
-            const data = snapshot.val();
-            this.props.setData(data);
+            this.props.setData(snapshot.val());
         })
     }
 
     render() {
-        console.log(this.props.data)
         return(
             <div className="compareAllContainer">
-                Compare it all!
+                <div className="mainVisualization"></div>   
+                <BoatRoute/>
             </div>
         )
     }
