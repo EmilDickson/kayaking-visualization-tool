@@ -11,6 +11,9 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 
+/* Visualization views */
+import CompareAll from '../CompareAll';
+
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
@@ -32,6 +35,7 @@ const App = () => (
       <Route path={ROUTES.HOME} component={HomePage} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
+      <Route path={ROUTES.COMPARE_ALL} component={CompareAll} />
     </div>
   </Router>
 );

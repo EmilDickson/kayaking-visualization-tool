@@ -24,6 +24,8 @@ button {
   width: 100%;
 }
 
+/* Variables */
+
 .variables {
   display: flex;
   justify-content: space-between;
@@ -31,6 +33,16 @@ button {
   width: 100%;
   background-color: #532065;
 }
+
+.activeVariable {
+  color: white;
+}
+
+.inactiveVariable {
+  color: black;
+}
+
+/* Menu */
 
 .navigation {
   width: 20%;

@@ -19,6 +19,9 @@ const NavigationAuth = ({ authUser }) => (
     <Dropdown.Item href={ROUTES.HOME}>
       Home
     </Dropdown.Item>
+    <Dropdown.Item href={ROUTES.COMPARE_ALL}>
+      Compare all variables
+    </Dropdown.Item>
     <Dropdown.Item href={ROUTES.ACCOUNT}>
       Account
     </Dropdown.Item>

@@ -1,17 +1,44 @@
-import React from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-const Variables = () => (
-    <div className="variables">
-        <div>Var 1</div>
-        <div>Var 2</div>
-        <div>Var 3</div>
-        <div>Var 4</div>
-        <div>Var 5</div>
-        <div>Var 6</div>
-        <div>Var 7</div>
-        <div>Var 8</div>
-        <div>Info</div>
-    </div>
-)
+class Variables extends Component {
+  renderVariables = () => {
+    const vars = this.props.variables
+    let variableList = []
+    for (let i = 0; i < vars.length; i++) {
+        variableList.push(
+          <div
+            className={vars[i].active ? "activeVariable" : "inactiveVariable"}
+            onClick={e => this.props.changeActiveVariable(e.target)}
+            id={vars[i].name}
+            key={"variableNo" + i}
+          >
+            {vars[i].name}
+          </div>
+        );
+    }
+    return variableList;
+  };
 
-export default Variables;
+  render() {
+    return (
+      <div className="variables">
+        {this.renderVariables()}
+        <div>info</div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  variables: state.variableState.variables
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeActiveVariable: variable => {
+        const varName = variable.id;
+        dispatch({ type: "CHANGE_ACTIVE_VARIABLE", varName })
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Variables);
