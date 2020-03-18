@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
-  data: null
+  data: null,
+  dataSelection: null,
+  selectedPoint: null,
 };
 
 const setData = (state, action) => {
@@ -9,10 +11,30 @@ const setData = (state, action) => {
     }
 }
 
+const setDataSelection = (state, action) => {
+    return {
+        ...state,
+        dataSelection: action.dataSelection
+    }
+}
+
+const setSelectedPoint = (state, action) => {
+    return {
+        ...state,
+        selectedPoint: action.selectedPoint
+    }
+}
+
 function dataReducer(state = INITIAL_STATE, action) {
     switch(action.type) {
         case "SET_DATA": {
             return setData(state, action);
+        }
+        case "SET_DATA_SELECTION": {
+            return setDataSelection(state, action);
+        }
+        case "SET_SELECTED_POINT": {
+            return setSelectedPoint(state, action);
         }
         default:
             return state;
