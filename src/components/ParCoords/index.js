@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ParallelCoordinates } from 'react-parcoords';
+import {ParallelCoordinates} from 'react-parcoords';
 import { connect } from "react-redux";
 
 class ParCoords extends Component {
@@ -18,12 +18,12 @@ class ParCoords extends Component {
     }
 
     getConfiguration = (dimensions) => ({
-        color: "#069",
+        color: "#123456",
         width: 950,
         height: 550,
         dimensions: dimensions,
         data: this.props.dataSelection ? this.props.dataSelection : this.props.data,
-        highlights: [this.props.data[450]],
+        highlights: [this.props.selectedPoint ? this.props.selectedPoint : this.props.data[450]],
         nullValueSeparator: 'top',
         brushedColor: null
     });

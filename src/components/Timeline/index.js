@@ -2,16 +2,50 @@ import React, { Component } from "react";
 import { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 
 class Timeline extends Component {
-    handleRangeChange = rangeChange => {
-        this.props.setDataSelection(this.props.data.slice(rangeChange[0], rangeChange[2]));
-        this.props.setSelectedPoint(this.props.data[rangeChange[1]]);
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            playing: false
+        };
     }
-    
+
+    timeOut = i => {
+        setTimeout(() => {
+            if (i < this.props.dataSelection.length && this.state.playing) {
+                this.props.setSelectedPoint(this.props.dataSelection[i]);
+                this.timeOut(i + 1);
+            }
+        }, 300);
+    };
+
+    handlePlaying = () => {
+        if (this.props.dataSelection) {
+            this.setState({
+                playing: !this.state.playing
+            });
+            this.timeOut(0);
+        }
+    };
+
+    handleRangeChange = rangeChange => {
+        this.props.setDataSelection(
+            this.props.data.slice(rangeChange[0], rangeChange[2])
+        );
+        this.props.setSelectedPoint(this.props.data[rangeChange[1]]);
+    };
+
     render() {
         const { data } = this.props;
-        let defaultValues = [Math.round(data.length / 8), Math.round(data.length / 4), Math.round(data.length / 2)];
+        let defaultValues = [
+            Math.round(data.length / 8),
+            Math.round(data.length / 4),
+            Math.round(data.length / 2)
+        ];
 
         return (
             <div className="timelineContainer">
@@ -27,7 +61,19 @@ class Timeline extends Component {
                     Time
                 </div>
                 <div className="playButton">
-                    <p>Play</p>
+                    {this.state.playing ? (
+                        <FontAwesomeIcon
+                            icon={faPauseCircle}
+                            size="2x"
+                            onClick={this.handlePlaying}
+                        />
+                    ) : (
+                        <FontAwesomeIcon
+                            icon={faPlayCircle}
+                            size="2x"
+                            onClick={this.handlePlaying}
+                        />
+                    )}
                 </div>
             </div>
         );
@@ -35,7 +81,8 @@ class Timeline extends Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.dataState.data
+    data: state.dataState.data,
+    dataSelection: state.dataState.dataSelection
 });
 
 const mapDispatchToProps = dispatch => ({
