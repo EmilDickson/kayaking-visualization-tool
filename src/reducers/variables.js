@@ -1,54 +1,17 @@
 const INITIAL_STATE = {
     variables: [
         {
-            'name': 'xAcc',
-            'active': true
-        },
-        {
-            'name': 'yAcc', 
-            'active': true
-        },
-        {
-            'name': 'zAcc',
-            'active': true
-        },
-        {
-            'name': 'speed',
-            'active': true
-        },
-        {
-            'name': 'fpaddling',
-            'active': true
-        },
-        {
-            'name': 'xGyro',
-            'active': true
-        },
-        {
-            'name': 'yGyro',
-            'active': true
-        },
-        {
-            'name': 'zGyro',
-            'active': true
-        },
-        {
-            'name': 'time',
-            'active': true
-        },
-        {
-            'name': 'deltaVPos',
-            'active': true
-        },
-        {
-            'name': 'deltaVNeg',
-            'active': true
-        },
-        {
-            'name': 'pulse',
+            'name': 'Loading variables...',
             'active': true
         },
     ]
+}
+
+const setVariables = (state, action) => {
+    return {
+        ...state,
+        variables: action.variables
+    }
 }
 
 const changeActiveVariable = (state, action) => {
@@ -67,6 +30,9 @@ const changeActiveVariable = (state, action) => {
 
 function variableReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case "SET_VARIABLES": {
+            return setVariables(state, action);
+        }
         case "CHANGE_ACTIVE_VARIABLE": {
             return changeActiveVariable(state, action);
         }

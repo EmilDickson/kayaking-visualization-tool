@@ -14,6 +14,44 @@ class Map extends Component {
         }
     });
 
+    getSpeedTail = () => {
+        const { data, selectedPoint, maxInDataSet } = this.props;
+        if (data && selectedPoint && maxInDataSet) {
+            const selectedCoords = [selectedPoint.long, selectedPoint.lat];
+            let uniqueCoords = [];
+            let uniqueLat = [...new Set(data.map(item => item.lat))];
+            let uniqueLong = [...new Set(data.map(item => item.long))];
+            for (let i = 0; i < uniqueLat.length; i++) {
+                uniqueCoords.push([uniqueLong[i], uniqueLat[i]])
+            }
+            const speedConstant = Math.round((selectedPoint.speed / maxInDataSet.speed) * 4);
+            for (let i = 0; i < uniqueCoords.length; i++) {
+                if (uniqueCoords[i][0] === selectedCoords[0] && uniqueCoords[i][1] === selectedCoords[1]) {
+                    if (i > speedConstant) {
+                        let lat1 = uniqueCoords[i - speedConstant][1];
+                        let lat2 = selectedCoords[1];
+                        let long1 = uniqueCoords[i - speedConstant][0];
+                        let long2 = selectedCoords[0];
+                        return {
+                            type: "Feature",
+                            geometry: {
+                                type: "LineString",
+                                coordinates: [[long1, lat1], [long2, lat2]]
+                            }
+                        };
+                    }
+                }
+            }
+        }
+        return {
+            type: "Feature",
+            geometry: {
+                type: "LineString",
+                coordinates: [this.props.long, this.props.lat]
+            }
+        }
+    }
+
     getPoint = () => ({
         type: "Feature",
         geometry: {
@@ -30,6 +68,7 @@ class Map extends Component {
     render() {
         const route = this.getRoute();
         const point = this.getPoint();
+        const tail = this.getSpeedTail();
         return (
             <div className="mapContainer">
                 <MapGL
@@ -54,13 +93,27 @@ class Map extends Component {
                             "line-width": 4
                         }}
                     />
+                    <Source id="tail" type="geojson" data={tail} />
+                    <Layer 
+                        id="tail"
+                        type="line"
+                        source="tail"
+                        layout={{
+                            "line-join": "round",
+                            "line-cap": "round"
+                        }}
+                        paint={{
+                            "line-color": "#0CADF5",
+                            "line-width": 4
+                        }}
+                    />
                     <Source id="point" type="geojson" data={point} />
                     <Layer
                         id="point"
                         type="circle"
                         source="point"
                         paint={{
-                            "circle-color": "#123456"
+                            "circle-color": "black"
                         }}
                     />
                 </MapGL>
@@ -70,7 +123,9 @@ class Map extends Component {
 }
 
 const mapStateToProps = state => ({
-    selectedPoint: state.dataState.selectedPoint
+    selectedPoint: state.dataState.selectedPoint,
+    data: state.dataState.data,
+    maxInDataSet: state.dataState.maxInDataSet,
 });
 
 export default connect(mapStateToProps)(Map);

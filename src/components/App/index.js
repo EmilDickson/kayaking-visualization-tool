@@ -30,6 +30,17 @@ class App extends Component {
             const point = Math.round(data.length / 4);
             this.props.setDataSelection(data.slice(lowBound, highBound));
             this.props.setSelectedPoint(data[point]);
+            const rawVariables = Object.keys(data[0]);
+            let variables = []
+            for (let i = 0; i < rawVariables.length; i++) {
+                if (rawVariables[i] !== "lat" && rawVariables[i] !== "long") {
+                    variables.push({
+                        'name': rawVariables[i],
+                        'active': true
+                    })
+                }
+            }
+            this.props.setVariables(variables);
         });
     }
 
@@ -72,7 +83,9 @@ const mapDispatchToProps = dispatch => ({
     setDataSelection: dataSelection =>
         dispatch({ type: "SET_DATA_SELECTION", dataSelection }),
     setSelectedPoint: selectedPoint =>
-        dispatch({ type: "SET_SELECTED_POINT", selectedPoint })
+        dispatch({ type: "SET_SELECTED_POINT", selectedPoint }),
+    setVariables: variables =>
+        dispatch({ type: "SET_VARIABLES", variables }),
 });
 
 export default compose(
