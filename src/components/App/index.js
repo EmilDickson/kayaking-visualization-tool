@@ -23,7 +23,13 @@ import { withAuthentication } from "../Session";
 class App extends Component {
     componentDidMount() {
         this.props.firebase.allData().on("value", snapshot => {
-            this.props.setData(snapshot.val());
+            const data = snapshot.val();
+            this.props.setData(data);
+            const lowBound = Math.round(data.length / 8);
+            const highBound = Math.round(data.length / 2);
+            const point = Math.round(data.length / 4);
+            this.props.setDataSelection(data.slice(lowBound, highBound));
+            this.props.setSelectedPoint(data[point]);
         });
     }
 
@@ -62,7 +68,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setData: data => dispatch({ type: "SET_DATA", data })
+    setData: data => dispatch({ type: "SET_DATA", data }),
+    setDataSelection: dataSelection =>
+        dispatch({ type: "SET_DATA_SELECTION", dataSelection }),
+    setSelectedPoint: selectedPoint =>
+        dispatch({ type: "SET_SELECTED_POINT", selectedPoint })
 });
 
 export default compose(

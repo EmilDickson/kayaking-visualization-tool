@@ -6,17 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 
 class Timeline extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            playing: false
-        };
-    }
-
     timeOut = i => {
         setTimeout(() => {
-            if (i < this.props.dataSelection.length && this.state.playing) {
+            if (i < this.props.dataSelection.length && (this.props.playingPoint || this.props.playingSpan)) {
                 this.props.setSelectedPoint(this.props.dataSelection[i]);
                 this.timeOut(i + 1);
             }
@@ -25,9 +17,7 @@ class Timeline extends Component {
 
     handlePlaying = () => {
         if (this.props.dataSelection) {
-            this.setState({
-                playing: !this.state.playing
-            });
+            this.props.setTimelinePlayingPoint(!this.props.playingPoint)
             this.timeOut(0);
         }
     };
@@ -40,7 +30,7 @@ class Timeline extends Component {
     };
 
     render() {
-        const { data } = this.props;
+        const { data, playingPoint, playingSpan } = this.props;
         let defaultValues = [
             Math.round(data.length / 8),
             Math.round(data.length / 4),
@@ -61,7 +51,7 @@ class Timeline extends Component {
                     Time
                 </div>
                 <div className="playButton">
-                    {this.state.playing ? (
+                    {playingPoint ? (
                         <FontAwesomeIcon
                             icon={faPauseCircle}
                             size="2x"
@@ -82,14 +72,20 @@ class Timeline extends Component {
 
 const mapStateToProps = state => ({
     data: state.dataState.data,
-    dataSelection: state.dataState.dataSelection
+    dataSelection: state.dataState.dataSelection,
+    playingPoint: state.logicState.timelinePlayingPoint,
+    playingSpan: state.logicState.timelinePlayingSpan,
 });
 
 const mapDispatchToProps = dispatch => ({
     setDataSelection: dataSelection =>
         dispatch({ type: "SET_DATA_SELECTION", dataSelection }),
     setSelectedPoint: selectedPoint =>
-        dispatch({ type: "SET_SELECTED_POINT", selectedPoint })
+        dispatch({ type: "SET_SELECTED_POINT", selectedPoint }),
+    setTimelinePlayingPoint: timelinePlayingPoint => 
+        dispatch({ type: "SET_TIMELINE_PLAYING_POINT", timelinePlayingPoint }),
+    setTimelinePlayingSpan: timelinePlayingSpan => 
+        dispatch({ type: "SET_TIMELINE_PLAYING_SPAN", timelinePlayingSpan }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
