@@ -97,20 +97,21 @@ class Map extends Component {
                     longitude={this.props.long}
                     zoom={17}
                 >
-                    <Source id="span" type="geojson" data={span} />
-                    <Layer 
-                        id="span"
-                        type="line"
-                        source="span"
-                        layout={{
-                            "line-join": "round",
-                            "line-cap": "round"
-                        }}
-                        paint={{
-                            "line-color": "#88D140",
-                            "line-width": 12
-                        }}
-                    />
+                    {this.props.withRouteHighlight ? (<Source id="span" type="geojson" data={span} />) : null }
+                    {this.props.withRouteHighlight ? (
+                        <Layer 
+                            id="span"
+                            type="line"
+                            source="span"
+                            layout={{
+                                "line-join": "round",
+                                "line-cap": "round"
+                            }}
+                            paint={{
+                                "line-color": "#88D140",
+                                "line-width": 12
+                            }}
+                        />) : null}
                     <Source id="route" type="geojson" data={route} />
                     <Layer
                         id="route"

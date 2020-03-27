@@ -15,14 +15,14 @@ class CompareAll extends Component {
         if (this.props.data) {
             const { selectedView } = this.props;
             return (
-                <div className="compareAllContainer">
+                <div className="rightRouteWithSwitcherContainer">
                     <div className="visTimeline">
                         {selectedView === "primary" ? (
                             <ParCoords />
                         ) : (
                             <SpanChart />
                         )}
-                        <Timeline />
+                        <Timeline withSpan={true} />
                     </div>
                     <ViewSwitcher
                         primary="ParCoords"
@@ -30,7 +30,7 @@ class CompareAll extends Component {
                         selected={selectedView}
                         handleViewSwitch={() => this.props.switchSelectedView()}
                     />
-                    <BoatRoute />
+                    <BoatRoute withRouteHighlight={true} />
                 </div>
             );
         } else {

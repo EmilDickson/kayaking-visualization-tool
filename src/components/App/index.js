@@ -16,6 +16,7 @@ import AdminPage from "../Admin";
 
 /* Visualization views */
 import CompareAll from "../CompareAll";
+import SpeedComparison from "../SpeedComparison";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
@@ -26,8 +27,8 @@ class App extends Component {
             const data = snapshot.val();
             this.props.setData(data);
             const lowBound = Math.round(data.length / 8);
-            const highBound = Math.round(data.length / 2);
-            const point = Math.round(data.length / 4);
+            const highBound = Math.round(data.length / 4);
+            const point = Math.round(data.length / 6);
             this.props.setDataSelection(data.slice(lowBound, highBound));
             this.props.setSelectedPoint(data[point]);
             const rawVariables = Object.keys(data[0]);
@@ -43,9 +44,10 @@ class App extends Component {
             this.props.setVariables(variables);
             this.props.setTimelinePoints([
                 Math.round(data.length / 8),
-                Math.round(data.length / 4),
-                Math.round(data.length / 2)
+                Math.round(data.length / 6),
+                Math.round(data.length / 4)
             ]);
+            this.props.setTimelinePoint(Math.round(data.length / 8));
         });
     }
 
@@ -73,6 +75,7 @@ class App extends Component {
                     <Route path={ROUTES.ACCOUNT} component={AccountPage} />
                     <Route path={ROUTES.ADMIN} component={AdminPage} />
                     <Route path={ROUTES.COMPARE_ALL} component={CompareAll} />
+                    <Route path={ROUTES.SPEED_COMPARISON} component={SpeedComparison} />
                 </div>
             </Router>
         );
@@ -93,6 +96,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "SET_VARIABLES", variables }),
     setTimelinePoints: timelinePoints =>
         dispatch({ type: "SET_TIMELINE_POINTS", timelinePoints }),
+    setTimelinePoint: timelinePoint =>
+        dispatch({ type: "SET_TIMELINE_POINT", timelinePoint })
 });
 
 export default compose(

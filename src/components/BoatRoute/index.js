@@ -12,7 +12,7 @@ class BoatRoute extends Component {
         return list_of_points;
     };
     render() {
-        const { data } = this.props;
+        const { data, withRouteHighlight } = this.props;
         const coordinates = this.getAllPoints(data);
         const middlePoint = Math.round(coordinates.length / 4);
         return (
@@ -20,6 +20,7 @@ class BoatRoute extends Component {
                 lat={coordinates[middlePoint][1]}
                 long={coordinates[middlePoint][0]}
                 coordinates={coordinates}
+                withRouteHighlight={withRouteHighlight}
             />
         );
     }

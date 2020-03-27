@@ -2,6 +2,7 @@ const INITIAL_STATE = {
     timelinePlayingPoint: false,
     timelinePlayingSpan: false,
     timelinePoints: [],
+    timelinePoint: [0],
     spanChartElement: { d3: "" },
     selectedView: "primary"
 }
@@ -24,6 +25,13 @@ const setTimelinePoints = (state, action) => {
     return {
         ...state,
         timelinePoints: action.timelinePoints
+    }
+}
+
+const setTimelinePoint = (state, action) => {
+    return {
+        ...state,
+        timelinePoint: action.timelinePoint
     }
 }
 
@@ -54,6 +62,9 @@ function logicReducer(state = INITIAL_STATE, action) {
         }
         case "SET_TIMELINE_POINTS": {
             return setTimelinePoints(state, action)
+        }
+        case "SET_TIMELINE_POINT": {
+            return setTimelinePoint(state, action)
         }
         case "SET_SPAN_CHART_ELEMENT": {
             return setSpanChartElement(state, action)

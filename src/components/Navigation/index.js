@@ -22,6 +22,9 @@ const NavigationAuth = ({ authUser }) => (
     <Dropdown.Item href={ROUTES.COMPARE_ALL}>
       Compare all variables
     </Dropdown.Item>
+    <Dropdown.Item href={ROUTES.SPEED_COMPARISON}>
+      Speed comparison
+    </Dropdown.Item>
     <Dropdown.Item href={ROUTES.ACCOUNT}>
       Account
     </Dropdown.Item>

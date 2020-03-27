@@ -8,4 +8,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const ADMIN_DETAILS = '/admin/:id';
 
 /* Visualization views */
-export const COMPARE_ALL = '/compare_all'
+export const COMPARE_ALL = '/compare_all';
+export const SPEED_COMPARISON = '/speed_comparison';
