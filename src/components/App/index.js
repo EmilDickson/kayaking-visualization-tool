@@ -41,6 +41,11 @@ class App extends Component {
                 }
             }
             this.props.setVariables(variables);
+            this.props.setTimelinePoints([
+                Math.round(data.length / 8),
+                Math.round(data.length / 4),
+                Math.round(data.length / 2)
+            ]);
         });
     }
 
@@ -86,6 +91,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "SET_SELECTED_POINT", selectedPoint }),
     setVariables: variables =>
         dispatch({ type: "SET_VARIABLES", variables }),
+    setTimelinePoints: timelinePoints =>
+        dispatch({ type: "SET_TIMELINE_POINTS", timelinePoints }),
 });
 
 export default compose(

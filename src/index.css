@@ -154,6 +154,19 @@ button {
   justify-content: space-between;
 }
 
+.playButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  height: 35px;
+  width: 70px;
+}
+
+.playButtonLabel {
+  text-align: left;
+}
+
 .parCoordsContainer {
   margin-top: 20px;
   width: 800px;
