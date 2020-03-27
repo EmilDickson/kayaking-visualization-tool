@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
 const renderViewSelector = (view, selected, handleViewSwitch) => (
-    <div className={view === selected ? "selectedView" : ""} id={view}>
-        <img src={process.env.PUBLIC_URL + "/ViewLogos/" + view + ".png"} alt={view} onClick={e => handleViewSwitch(e)}/>
+    <div className={selected ? "selectedView" : ""} id={view}>
+        <img src={process.env.PUBLIC_URL + "/ViewLogos/" + view + ".png"} alt={view} onClick={handleViewSwitch}/>
     </div>
 )
 
 class ViewSwitcher extends Component {
     render () {
-        const {view1, view2, selected, handleViewSwitch} = this.props;
+        const {primary, secondary, selected, handleViewSwitch} = this.props;
         return (
             <div className="viewSwitcher">
-                {renderViewSelector(view1, selected, handleViewSwitch)}
-                {renderViewSelector(view2, selected, handleViewSwitch)}
+                {renderViewSelector(primary, selected === "primary" ? true : false, handleViewSwitch)}
+                {renderViewSelector(secondary, selected === "primary" ? false : true, handleViewSwitch)}
             </div>
         )
     }

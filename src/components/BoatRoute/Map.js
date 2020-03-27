@@ -14,6 +14,23 @@ class Map extends Component {
         }
     });
 
+    getRouteHighlight = () => {
+        const { dataSelection, long, lat } = this.props;
+        return (dataSelection ? {
+            type: "Feature",
+            geometry: {
+                type: "LineString",
+                coordinates: dataSelection.map(data => [data.long, data.lat])
+            }
+        } : {
+            type: "Feature",
+            geometry: {
+                type: "LineString",
+                coordinates: [long, lat]
+            }
+        });
+    }
+
     getSpeedTail = () => {
         const { data, selectedPoint, maxInDataSet } = this.props;
         if (data && selectedPoint && maxInDataSet) {
@@ -67,6 +84,7 @@ class Map extends Component {
 
     render() {
         const route = this.getRoute();
+        const span = this.getRouteHighlight();
         const point = this.getPoint();
         const tail = this.getSpeedTail();
         return (
@@ -79,6 +97,20 @@ class Map extends Component {
                     longitude={this.props.long}
                     zoom={17}
                 >
+                    <Source id="span" type="geojson" data={span} />
+                    <Layer 
+                        id="span"
+                        type="line"
+                        source="span"
+                        layout={{
+                            "line-join": "round",
+                            "line-cap": "round"
+                        }}
+                        paint={{
+                            "line-color": "#88D140",
+                            "line-width": 12
+                        }}
+                    />
                     <Source id="route" type="geojson" data={route} />
                     <Layer
                         id="route"
@@ -126,6 +158,7 @@ const mapStateToProps = state => ({
     selectedPoint: state.dataState.selectedPoint,
     data: state.dataState.data,
     maxInDataSet: state.dataState.maxInDataSet,
+    dataSelection: state.dataState.dataSelection,
 });
 
 export default connect(mapStateToProps)(Map);

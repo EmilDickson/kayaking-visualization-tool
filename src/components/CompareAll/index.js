@@ -11,29 +11,25 @@ import ViewSwitcher from "../ViewSwitcher";
 import SpanChart from "../SpanChart";
 
 class CompareAll extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            selectedView: "ParCoords",
-        }
-    }
-
-    handleViewSwitch = (e) => {
-        this.setState({
-            selectedView: e.target.parentNode.id
-        })
-    }
-
     render() {
         if (this.props.data) {
+            const { selectedView } = this.props;
             return (
                 <div className="compareAllContainer">
                     <div className="visTimeline">
-                        {this.state.selectedView === "ParCoords" ? <ParCoords /> : <SpanChart />}
+                        {selectedView === "primary" ? (
+                            <ParCoords />
+                        ) : (
+                            <SpanChart />
+                        )}
                         <Timeline />
                     </div>
-                    <ViewSwitcher view1="ParCoords" view2="SpanChart" selected={this.state.selectedView} handleViewSwitch={this.handleViewSwitch} />
+                    <ViewSwitcher
+                        primary="ParCoords"
+                        secondary="SpanChart"
+                        selected={selectedView}
+                        handleViewSwitch={() => this.props.switchSelectedView()}
+                    />
                     <BoatRoute />
                 </div>
             );
@@ -44,10 +40,15 @@ class CompareAll extends Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.dataState.data
+    data: state.dataState.data,
+    selectedView: state.logicState.selectedView
+});
+
+const mapDispatchToProps = dispatch => ({
+    switchSelectedView: () => dispatch({ type: "SWITCH_SELECTED_VIEW" })
 });
 
 export default compose(
     withFirebase,
-    connect(mapStateToProps)
+    connect(mapStateToProps, mapDispatchToProps)
 )(CompareAll);
