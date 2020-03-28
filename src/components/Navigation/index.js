@@ -25,6 +25,9 @@ const NavigationAuth = ({ authUser }) => (
     <Dropdown.Item href={ROUTES.SPEED_COMPARISON}>
       Speed comparison
     </Dropdown.Item>
+    <Dropdown.Item href={ROUTES.START_ANALYSIS}>
+      Start analysis
+    </Dropdown.Item>
     <Dropdown.Item href={ROUTES.ACCOUNT}>
       Account
     </Dropdown.Item>

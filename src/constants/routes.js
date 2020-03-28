@@ -10,3 +10,4 @@ export const ADMIN_DETAILS = '/admin/:id';
 /* Visualization views */
 export const COMPARE_ALL = '/compare_all';
 export const SPEED_COMPARISON = '/speed_comparison';
+export const START_ANALYSIS = '/start_analysis';

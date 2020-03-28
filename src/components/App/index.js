@@ -17,6 +17,7 @@ import AdminPage from "../Admin";
 /* Visualization views */
 import CompareAll from "../CompareAll";
 import SpeedComparison from "../SpeedComparison";
+import StartAnalysis from "../StartAnalysis";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
@@ -76,6 +77,7 @@ class App extends Component {
                     <Route path={ROUTES.ADMIN} component={AdminPage} />
                     <Route path={ROUTES.COMPARE_ALL} component={CompareAll} />
                     <Route path={ROUTES.SPEED_COMPARISON} component={SpeedComparison} />
+                    <Route path={ROUTES.START_ANALYSIS} component={StartAnalysis} />
                 </div>
             </Router>
         );
