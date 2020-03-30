@@ -22,7 +22,7 @@ class CompareAll extends Component {
                         ) : (
                             <SpanChart />
                         )}
-                        <Timeline withSpan={true} />
+                        <Timeline withSpan={true} withPlayButtons={true} />
                     </div>
                     <ViewSwitcher
                         primary="ParCoords"

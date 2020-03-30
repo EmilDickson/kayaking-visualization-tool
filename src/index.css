@@ -217,16 +217,25 @@ button {
   margin-left: -170px;
 }
 
+.smallMapContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-left: 17px;
+}
+
+.smallMapContainer, .mapboxgl-map {
+  padding-bottom: 50px;
+  width: 400px;
+  height: 120px;
+  overflow: hidden;
+}
+
 .radarChartSideMenu {
   display: flex;
   flex-direction: column;
   height: 100%;
   background-color: #C7C7C7;
-}
-
-.dataItem {
-  height: 64px;
-  width: 100%;
 }
 
 .addStart {
@@ -238,4 +247,39 @@ button {
   font-size: 2em;
   background-color: #626262;
   color: #a8a8a8;
+  border: none;
+}
+
+.addStart:hover, .addStart:focus {
+  background-color: green;
+}
+
+.dataItem {
+  width: 100%;
+}
+
+.dataItemHeader {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  height: 45px;
+  text-align: center;
+}
+
+.dataItemTitle {
+  padding-top: 10px;
+}
+
+.dataItemWindow {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataItemTime {
+  margin-left: 10%;
+  font-style: italic;
+}
+
+.dataItemTimespan {
+  margin-left: 5%;
+  width: 90%;
 }

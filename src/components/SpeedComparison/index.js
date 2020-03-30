@@ -133,13 +133,13 @@ class SpeedComparison extends Component {
                 }
             };
             return (
-                <div className="rightRouteContainer">
-                    <div className="visTimeline">
-                        <div className="boxWhiskerAndLineChart">
+                <div className='rightRouteContainer'>
+                    <div className='visTimeline'>
+                        <div className='boxWhiskerAndLineChart'>
                             <AnyChart {...boxAndWhiskerSettings} />
                             <AnyChart {...lineChartSettings} />
                         </div>
-                        <Timeline withSpan={true} />
+                        <Timeline withSpan={true} withPlayButtons={true} />
                     </div>
                     <BoatRoute withRouteHighlight={true} />
                 </div>

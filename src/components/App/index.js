@@ -33,13 +33,13 @@ class App extends Component {
             this.props.setDataSelection(data.slice(lowBound, highBound));
             this.props.setSelectedPoint(data[point]);
             const rawVariables = Object.keys(data[0]);
-            let variables = []
+            let variables = [];
             for (let i = 0; i < rawVariables.length; i++) {
                 if (rawVariables[i] !== "lat" && rawVariables[i] !== "long") {
                     variables.push({
-                        'name': rawVariables[i],
-                        'active': true
-                    })
+                        name: rawVariables[i],
+                        active: true
+                    });
                 }
             }
             this.props.setVariables(variables);
@@ -49,6 +49,15 @@ class App extends Component {
                 Math.round(data.length / 4)
             ]);
             this.props.setTimelinePoint(Math.round(data.length / 8));
+            const initialDataItem = {
+                id: 1,
+                data: data.slice(lowBound, highBound),
+                active: false,
+                open: false,
+            }
+            this.props.createDataItem(initialDataItem);
+            // All data initialization done, set "data initialized"
+            this.props.setDataInitialized();
         });
     }
 
@@ -56,7 +65,7 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    <div className="topMenu">
+                    <div className='topMenu'>
                         <Variables />
                         <Navigation />
                     </div>
@@ -76,8 +85,14 @@ class App extends Component {
                     <Route path={ROUTES.ACCOUNT} component={AccountPage} />
                     <Route path={ROUTES.ADMIN} component={AdminPage} />
                     <Route path={ROUTES.COMPARE_ALL} component={CompareAll} />
-                    <Route path={ROUTES.SPEED_COMPARISON} component={SpeedComparison} />
-                    <Route path={ROUTES.START_ANALYSIS} component={StartAnalysis} />
+                    <Route
+                        path={ROUTES.SPEED_COMPARISON}
+                        component={SpeedComparison}
+                    />
+                    <Route
+                        path={ROUTES.START_ANALYSIS}
+                        component={StartAnalysis}
+                    />
                 </div>
             </Router>
         );
@@ -94,12 +109,15 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "SET_DATA_SELECTION", dataSelection }),
     setSelectedPoint: selectedPoint =>
         dispatch({ type: "SET_SELECTED_POINT", selectedPoint }),
-    setVariables: variables =>
-        dispatch({ type: "SET_VARIABLES", variables }),
+    setVariables: variables => dispatch({ type: "SET_VARIABLES", variables }),
     setTimelinePoints: timelinePoints =>
         dispatch({ type: "SET_TIMELINE_POINTS", timelinePoints }),
     setTimelinePoint: timelinePoint =>
-        dispatch({ type: "SET_TIMELINE_POINT", timelinePoint })
+        dispatch({ type: "SET_TIMELINE_POINT", timelinePoint }),
+    createDataItem: dataItem =>
+        dispatch({ type: "CREATE_DATA_ITEM", dataItem }),
+    setDataInitialized: () =>
+        dispatch({ type: "SET_DATA_INITIALIZED" }),
 });
 
 export default compose(

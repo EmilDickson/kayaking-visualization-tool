@@ -87,18 +87,19 @@ class Map extends Component {
         const span = this.getRouteHighlight();
         const point = this.getPoint();
         const tail = this.getSpeedTail();
+        const { withRouteHighlight, type } = this.props;
         return (
-            <div className="mapContainer">
+            <div className={type === "small" ? "smallMapContainer" : "mapContainer"}>
                 <MapGL
-                    style={{ width: "600px", height: "250px" }}
+                    style={type === "small" ? { width: "400px", height: "180px" } : { width: "600px", height: "250px" }}
                     mapStyle="mapbox://styles/mapbox/light-v9"
                     accessToken={mapToken}
                     latitude={this.props.lat}
                     longitude={this.props.long}
-                    zoom={17}
+                    zoom={type === "small" ? 16 : 17}
                 >
-                    {this.props.withRouteHighlight ? (<Source id="span" type="geojson" data={span} />) : null }
-                    {this.props.withRouteHighlight ? (
+                    {withRouteHighlight ? (<Source id="span" type="geojson" data={span} />) : null }
+                    {withRouteHighlight ? (
                         <Layer 
                             id="span"
                             type="line"

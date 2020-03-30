@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   maxInDataSelection: null,
   minInDataSelection: null,
   selectedPoint: null,
+  dataItems: [],
+  dataInitialized: false,
 };
 
 const getMaxMin = (dataIn) => {
@@ -46,6 +48,51 @@ const setSelectedPoint = (state, action) => {
     }
 }
 
+const createDataItem = (state, action) => {
+    return {
+        ...state,
+        dataItems: [...state.dataItems, action.dataItem]
+    }
+}
+
+const updateDataItem = (state, action) => {
+    const dataItemIndex = state.dataItems.findIndex(dataItem => dataItem.id === action.dataItem.id);
+    const newDataItems = [
+        ...state.dataItems.slice(0, dataItemIndex),
+        action.dataItem,
+        ...state.dataItems.slice(dataItemIndex + 1)
+    ]
+    return {
+        ...state,
+        dataItems: newDataItems
+    }
+}
+
+const deleteDataItem = (state, action) => {
+    const dataItemIndex = state.dataItems.findIndex(dataItem => dataItem.id === action.dataItem.id);
+    const newDataItems = [...state.dataItems];
+    newDataItems.splice(dataItemIndex, 1);
+    return {
+        ...state,
+        dataItems: newDataItems
+    }
+}
+
+const getDataItem = (state, action) => {
+    for (let i = 0; i < state.dataItems.length; i++) {
+        if (state.dataItems[i].id === action.id) {
+            return state.dataItems[i];
+        }
+    }
+}
+
+const setDataInitialized = (state) => {
+    return {
+        ...state,
+        dataInitialized: !state.dataInitialized
+    }
+}
+
 function dataReducer(state = INITIAL_STATE, action) {
     switch(action.type) {
         case "SET_DATA": {
@@ -56,6 +103,21 @@ function dataReducer(state = INITIAL_STATE, action) {
         }
         case "SET_SELECTED_POINT": {
             return setSelectedPoint(state, action);
+        }
+        case "CREATE_DATA_ITEM": {
+            return createDataItem(state, action);
+        }
+        case "UPDATE_DATA_ITEM": {
+            return updateDataItem(state, action);
+        }
+        case "DELETE_DATA_ITEM": {
+            return deleteDataItem(state, action);
+        }
+        case "GET_DATA_ITEM": {
+            return getDataItem(state, action);
+        }
+        case "SET_DATA_INITIALIZED": {
+            return setDataInitialized(state);
         }
         default:
             return state;

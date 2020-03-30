@@ -85,8 +85,21 @@ class Timeline extends Component {
         }
     };
 
+    handleRangeChangeDataItem = rangeChange => {
+        if (this.props.withSpan) {
+            this.props.setDataSelection(
+                this.props.data.slice(rangeChange[0], rangeChange[2])
+            );
+            this.props.setSelectedPoint(this.props.data[rangeChange[1]]);
+            this.props.setTimelinePoints(rangeChange);
+        } else {
+            this.props.setSelectedPoint(this.props.data[rangeChange[0]]);
+            this.props.setTimelinePoint(rangeChange[0]);
+        }
+    };
+
     render() {
-        const { data, playingPoint, playingSpan, timelinePoints, timelinePoint, withSpan } = this.props;
+        const { data, playingPoint, playingSpan, timelinePoints, timelinePoint, withSpan, withPlayButtons } = this.props;
         return (
             <div className="timelineContainer">
                 <div className="timeline">
@@ -95,11 +108,11 @@ class Timeline extends Component {
                         max={data.length - 1}
                         value={withSpan ? timelinePoints : [timelinePoint]}
                         pushable
-                        onChange={e => this.handleRangeChange(e)}
+                        onChange={withPlayButtons ? (e => this.handleRangeChange(e)) : (e => this.handleRangeChangeDataItem(e))}
                     />
                     Time
                 </div>
-                {withSpan ? (
+                {withPlayButtons ? (withSpan ? (
                     <div className="playButtonContainer">
                         <div className="playButton">
                             <div>
@@ -158,7 +171,7 @@ class Timeline extends Component {
                             </div>
                         </div>
                     </div>
-                )}
+                )) : (null)}
             </div>
         );
     }
