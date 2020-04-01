@@ -9,8 +9,8 @@ import SideMenu from './SideMenu';
 
 class StartAnalysis extends Component {
     render() {
-        const { data, dataSelection, selectedView } = this.props;
-        if (data) {
+        const { data, dataSelection, selectedView, dataInitialized } = this.props;
+        if (dataInitialized) {
             return(
                 <div className="rightDataManagementContainer">
                     {selectedView === "primary" ? (
@@ -37,6 +37,7 @@ const mapStateToProps = state => ({
     data: state.dataState.data,
     dataSelection: state.dataState.dataSelection,
     selectedView: state.logicState.selectedView,
+    dataInitialized: state.dataState.dataInitialized,
 })
 
 const mapDispatchToProps = dispatch => ({

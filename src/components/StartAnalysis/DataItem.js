@@ -28,33 +28,27 @@ class DataItem extends Component {
     };
 
     timeSpanString = () => {
-        const { maxInDataSelection, minInDataSelection } = this.props;
+        const { dataItem } = this.props;
         return (
-            this.timestampToMinutes(minInDataSelection.time) +
+            this.timestampToMinutes(dataItem.data[0].time) +
             " - " +
-            this.timestampToMinutes(maxInDataSelection.time)
+            this.timestampToMinutes(dataItem.data[dataItem.data.length - 1].time)
         );
     };
 
     render() {
         const { dataItem, dataInitialized, deleteDataItem, updateDataItem } = this.props;
-        const backgroundColor = "#147E7E";
         if (dataInitialized) {
             return (
                 <div className='dataItem'>
                     <div
                         className='dataItemHeader'
-                        style={{ backgroundColor: backgroundColor }}
                     >
                         <Button
                             variant={dataItem.active ? "info" : "secondary"}
                             onClick={() => {
-                                const updatedDataItem = {
-                                    id: dataItem.id,
-                                    data: dataItem.data,
-                                    active: !dataItem.active,
-                                    open: dataItem.open,
-                                }
+                                let updatedDataItem = { ...dataItem }
+                                updatedDataItem.active = !dataItem.active;
                                 updateDataItem(updatedDataItem)
                             }
                             }
@@ -76,12 +70,8 @@ class DataItem extends Component {
                         </div>
                         <Button
                             onClick={() => {
-                                const updatedDataItem = {
-                                    id: dataItem.id,
-                                    data: dataItem.data,
-                                    active: dataItem.active,
-                                    open: !dataItem.open,
-                                }
+                                let updatedDataItem = { ...dataItem };
+                                updatedDataItem.open = !dataItem.open;
                                 updateDataItem(updatedDataItem);
                             }}
                             aria-controls='dataWindow'
@@ -105,13 +95,14 @@ class DataItem extends Component {
                             <BoatRoute
                                 type={"small"}
                                 withRouteHighlight={true}
+                                dataItem={dataItem}
                             />
                             <hr />
                             <div className='dataItemTime'>
                                 {this.timeSpanString()}
                             </div>
                             <div className='dataItemTimespan'>
-                                <Timeline withSpan={true} />
+                                <Timeline withSpan={true} dataItem={dataItem} />
                             </div>
                             <Button
                                 onClick={() => deleteDataItem(dataItem)}

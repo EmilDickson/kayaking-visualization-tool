@@ -8,13 +8,12 @@ import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 class Timeline extends Component {
     timeOutPoint = (i, valuesIn) => {
         setTimeout(() => {
-            if (i < this.props.dataSelection.length && this.props.playingPoint) {
+            if (
+                i < this.props.dataSelection.length &&
+                this.props.playingPoint
+            ) {
                 this.props.setSelectedPoint(this.props.dataSelection[i]);
-                const valuesOut = [
-                    valuesIn[0],
-                    valuesIn[1] + 1,
-                    valuesIn[2]
-                ]
+                const valuesOut = [valuesIn[0], valuesIn[1] + 1, valuesIn[2]];
                 this.props.setTimelinePoints(valuesOut);
                 this.timeOutPoint(i + 1, valuesOut);
             }
@@ -23,12 +22,12 @@ class Timeline extends Component {
 
     handlePlayingPoint = () => {
         if (this.props.dataSelection) {
-            this.props.setTimelinePlayingPoint(!this.props.playingPoint)
+            this.props.setTimelinePlayingPoint(!this.props.playingPoint);
             const values = [
                 this.props.timelinePoints[0],
                 this.props.timelinePoints[0],
                 this.props.timelinePoints[2]
-            ]
+            ];
             this.timeOutPoint(0, values);
         }
     };
@@ -36,7 +35,10 @@ class Timeline extends Component {
     timeOutSpan = (i, valuesIn) => {
         const step = valuesIn[2] - valuesIn[0];
         setTimeout(() => {
-            if (valuesIn[2] < this.props.data.length && this.props.playingSpan) {
+            if (
+                valuesIn[2] < this.props.data.length &&
+                this.props.playingSpan
+            ) {
                 this.props.setDataSelection(
                     this.props.data.slice(valuesIn[0], valuesIn[2])
                 );
@@ -53,9 +55,9 @@ class Timeline extends Component {
             this.props.setTimelinePlayingSpan(!this.props.playingSpan);
             this.timeOutSpan(0, this.props.timelinePoints);
         }
-    }
+    };
 
-    timeOutNoSpan = (i) => {
+    timeOutNoSpan = i => {
         setTimeout(() => {
             if (i < this.props.data.length && this.props.playingPoint) {
                 this.props.setSelectedPoint(this.props.data[i]);
@@ -85,93 +87,112 @@ class Timeline extends Component {
         }
     };
 
-    handleRangeChangeDataItem = rangeChange => {
-        if (this.props.withSpan) {
-            this.props.setDataSelection(
-                this.props.data.slice(rangeChange[0], rangeChange[2])
-            );
-            this.props.setSelectedPoint(this.props.data[rangeChange[1]]);
-            this.props.setTimelinePoints(rangeChange);
-        } else {
-            this.props.setSelectedPoint(this.props.data[rangeChange[0]]);
-            this.props.setTimelinePoint(rangeChange[0]);
-        }
+    handleRangeChangeDataItem = (rangeChange, dataItem) => {
+        let updatedDataItem = { ...dataItem };
+        updatedDataItem.data = this.props.data.slice(rangeChange[0], rangeChange[2]);
+        updatedDataItem.selectedPoint = this.props.data[rangeChange[1]];
+        updatedDataItem.timelinePoints = rangeChange;
+        /* this.props.setDataSelection(
+            this.props.data.slice(rangeChange[0], rangeChange[2])
+        ); */
+        /* this.props.setSelectedPoint(this.props.data[rangeChange[1]]); */
+        this.props.updateDataItem(updatedDataItem);
     };
 
     render() {
-        const { data, playingPoint, playingSpan, timelinePoints, timelinePoint, withSpan, withPlayButtons } = this.props;
+        const {
+            data,
+            playingPoint,
+            playingSpan,
+            timelinePoints,
+            timelinePoint,
+            withSpan,
+            withPlayButtons,
+            dataItem
+        } = this.props;
+        const withDataItemPoints = dataItem ? dataItem.timelinePoints : timelinePoints;
         return (
-            <div className="timelineContainer">
-                <div className="timeline">
+            <div className='timelineContainer'>
+                <div className='timeline'>
                     <Range
                         min={0}
                         max={data.length - 1}
-                        value={withSpan ? timelinePoints : [timelinePoint]}
+                        value={withSpan ? withDataItemPoints : [timelinePoint]}
                         pushable
-                        onChange={withPlayButtons ? (e => this.handleRangeChange(e)) : (e => this.handleRangeChangeDataItem(e))}
+                        onChange={
+                            withPlayButtons
+                                ? e => this.handleRangeChange(e)
+                                : e =>
+                                      this.handleRangeChangeDataItem(
+                                          e,
+                                          dataItem
+                                      )
+                        }
                     />
                     Time
                 </div>
-                {withPlayButtons ? (withSpan ? (
-                    <div className="playButtonContainer">
-                        <div className="playButton">
-                            <div>
-                                {playingPoint ? (
-                                    <FontAwesomeIcon
-                                        icon={faPauseCircle}
-                                        size="2x"
-                                        onClick={this.handlePlayingPoint}
-                                    />
-                                ) : (
-                                    <FontAwesomeIcon
-                                        icon={faPlayCircle}
-                                        size="2x"
-                                        onClick={this.handlePlayingPoint}
-                                    />
-                                )}
+                {withPlayButtons ? (
+                    withSpan ? (
+                        <div className='playButtonContainer'>
+                            <div className='playButton'>
+                                <div>
+                                    {playingPoint ? (
+                                        <FontAwesomeIcon
+                                            icon={faPauseCircle}
+                                            size='2x'
+                                            onClick={this.handlePlayingPoint}
+                                        />
+                                    ) : (
+                                        <FontAwesomeIcon
+                                            icon={faPlayCircle}
+                                            size='2x'
+                                            onClick={this.handlePlayingPoint}
+                                        />
+                                    )}
+                                </div>
+                                <div className='playButtonLabel'>Span</div>
                             </div>
-                            <div className="playButtonLabel">Span</div>
-                        </div>
-                        <div className="playButton">
-                            <div>
-                                {playingSpan ? (
-                                    <FontAwesomeIcon
-                                        icon={faPauseCircle}
-                                        size="2x"
-                                        onClick={this.handlePlayingSpan}
-                                    />
-                                ) : (
-                                    <FontAwesomeIcon
-                                        icon={faPlayCircle}
-                                        size="2x"
-                                        onClick={this.handlePlayingSpan}
-                                    />
-                                )}
-                            </div>
-                            <div className="playButtonLabel">All</div>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="playButtonContainer">
-                        <div className="playButton">
-                            <div>
-                                {playingPoint ? (
-                                    <FontAwesomeIcon
-                                        icon={faPauseCircle}
-                                        size="2x"
-                                        onClick={this.handlePlayingNoSpan}
-                                    />
-                                ) : (
-                                    <FontAwesomeIcon
-                                        icon={faPlayCircle}
-                                        size="2x"
-                                        onClick={this.handlePlayingNoSpan}
-                                    />
-                                )}
+                            <div className='playButton'>
+                                <div>
+                                    {playingSpan ? (
+                                        <FontAwesomeIcon
+                                            icon={faPauseCircle}
+                                            size='2x'
+                                            onClick={this.handlePlayingSpan}
+                                        />
+                                    ) : (
+                                        <FontAwesomeIcon
+                                            icon={faPlayCircle}
+                                            size='2x'
+                                            onClick={this.handlePlayingSpan}
+                                        />
+                                    )}
+                                </div>
+                                <div className='playButtonLabel'>All</div>
                             </div>
                         </div>
-                    </div>
-                )) : (null)}
+                    ) : (
+                        <div className='playButtonContainer'>
+                            <div className='playButton'>
+                                <div>
+                                    {playingPoint ? (
+                                        <FontAwesomeIcon
+                                            icon={faPauseCircle}
+                                            size='2x'
+                                            onClick={this.handlePlayingNoSpan}
+                                        />
+                                    ) : (
+                                        <FontAwesomeIcon
+                                            icon={faPlayCircle}
+                                            size='2x'
+                                            onClick={this.handlePlayingNoSpan}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )
+                ) : null}
             </div>
         );
     }
@@ -183,7 +204,7 @@ const mapStateToProps = state => ({
     playingPoint: state.logicState.timelinePlayingPoint,
     playingSpan: state.logicState.timelinePlayingSpan,
     timelinePoints: state.logicState.timelinePoints,
-    timelinePoint: state.logicState.timelinePoint,
+    timelinePoint: state.logicState.timelinePoint
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -191,14 +212,15 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "SET_DATA_SELECTION", dataSelection }),
     setSelectedPoint: selectedPoint =>
         dispatch({ type: "SET_SELECTED_POINT", selectedPoint }),
-    setTimelinePlayingPoint: timelinePlayingPoint => 
+    setTimelinePlayingPoint: timelinePlayingPoint =>
         dispatch({ type: "SET_TIMELINE_PLAYING_POINT", timelinePlayingPoint }),
-    setTimelinePlayingSpan: timelinePlayingSpan => 
+    setTimelinePlayingSpan: timelinePlayingSpan =>
         dispatch({ type: "SET_TIMELINE_PLAYING_SPAN", timelinePlayingSpan }),
     setTimelinePoints: timelinePoints =>
         dispatch({ type: "SET_TIMELINE_POINTS", timelinePoints }),
     setTimelinePoint: timelinePoint =>
         dispatch({ type: "SET_TIMELINE_POINT", timelinePoint }),
+    updateDataItem: dataItem => dispatch({ type: "UPDATE_DATA_ITEM", dataItem })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timeline);

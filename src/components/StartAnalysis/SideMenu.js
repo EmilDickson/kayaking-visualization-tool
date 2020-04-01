@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faPlusCircle,
-    faChevronUp,
-    faChevronDown
+    faPlusCircle
 } from "@fortawesome/free-solid-svg-icons";
-import { Button, Collapse } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 import DataItem from "./DataItem";
 import Loading from "../Loading";
 
 class SideMenu extends Component {
     addNewDataItem = () => {
-        const { dataItems, dataSelection, createDataItem } = this.props;
+        const { dataItems, dataSelection, createDataItem, selectedPoint, timelinePoints } = this.props;
         const newId = dataItems.length > 0 ? dataItems[dataItems.length - 1].id + 1 : 1;
         const dataItem = {
             id: newId,
             data: dataSelection,
-            active: false,
+            selectedPoint: selectedPoint,
+            timelinePoints: timelinePoints,
+            active: true,
             open: false,
         }
         createDataItem(dataItem);
@@ -30,6 +30,7 @@ class SideMenu extends Component {
         if (dataInitialized) {
             return (
                 <div className="radarChartSideMenu">
+                    <div className="dataItemsHeadline">ALL STARTS</div>
                     {dataItemObjects}
                     <Button className="addStart" onClick={this.addNewDataItem}>
                         <FontAwesomeIcon icon={faPlusCircle} />
@@ -48,6 +49,8 @@ const mapStateToProps = state => ({
     dataSelection: state.dataState.dataSelection,
     dataItems: state.dataState.dataItems,
     dataInitialized: state.dataState.dataInitialized,
+    selectedPoint: state.dataState.selectedPoint,
+    timelinePoints: state.logicState.timelinePoints,
 });
 
 const mapDispatchToProps = dispatch => ({

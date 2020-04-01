@@ -49,6 +49,9 @@ const setSelectedPoint = (state, action) => {
 }
 
 const createDataItem = (state, action) => {
+    const maxMin = getMaxMin(action.dataItem.data);
+    action.dataItem["maxInDataSelection"] = maxMin.max;
+    action.dataItem["minInDataSelection"] = maxMin.min;
     return {
         ...state,
         dataItems: [...state.dataItems, action.dataItem]
@@ -57,6 +60,9 @@ const createDataItem = (state, action) => {
 
 const updateDataItem = (state, action) => {
     const dataItemIndex = state.dataItems.findIndex(dataItem => dataItem.id === action.dataItem.id);
+    const maxMin = getMaxMin(action.dataItem.data);
+    action.dataItem["maxInDataSelection"] = maxMin.max;
+    action.dataItem["minInDataSelection"] = maxMin.min;
     const newDataItems = [
         ...state.dataItems.slice(0, dataItemIndex),
         action.dataItem,

@@ -15,14 +15,20 @@ class Map extends Component {
     });
 
     getRouteHighlight = () => {
-        const { dataSelection, long, lat } = this.props;
-        return (dataSelection ? {
+        const { dataSelection, long, lat, dataItem } = this.props;
+        return (dataSelection ? (dataItem ? {
+            type: "Feature",
+            geometry: {
+                type: "LineString",
+                coordinates: dataItem.data.map(data => [data.long, data.lat])
+            }
+        } : {
             type: "Feature",
             geometry: {
                 type: "LineString",
                 coordinates: dataSelection.map(data => [data.long, data.lat])
             }
-        } : {
+        }) : {
             type: "Feature",
             geometry: {
                 type: "LineString",
@@ -32,9 +38,9 @@ class Map extends Component {
     }
 
     getSpeedTail = () => {
-        const { data, selectedPoint, maxInDataSet } = this.props;
+        const { data, selectedPoint, maxInDataSet, dataItem } = this.props;
         if (data && selectedPoint && maxInDataSet) {
-            const selectedCoords = [selectedPoint.long, selectedPoint.lat];
+            const selectedCoords = dataItem? [dataItem.selectedPoint.long, dataItem.selectedPoint.lat] : [selectedPoint.long, selectedPoint.lat];
             let uniqueCoords = [];
             let uniqueLat = [...new Set(data.map(item => item.lat))];
             let uniqueLong = [...new Set(data.map(item => item.long))];
@@ -69,25 +75,37 @@ class Map extends Component {
         }
     }
 
-    getPoint = () => ({
-        type: "Feature",
-        geometry: {
-            type: "Point",
-            coordinates: this.props.selectedPoint
-                ? [this.props.selectedPoint.long, this.props.selectedPoint.lat]
-                : [this.props.long, this.props.lat]
-        },
-        properties: {
-            name: "Current point"
+    getPoint = () => {
+        const { selectedPoint, dataItem, long, lat } = this.props;
+        if (dataItem) {
+            return {
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [dataItem.selectedPoint.long, dataItem.selectedPoint.lat]
+                }
+            }
+        } else {        
+            return {
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: selectedPoint
+                    ? [selectedPoint.long, selectedPoint.lat]
+                    : [long, lat]
+            },
+            properties: {
+                name: "Current point"
+            }
         }
-    });
+    }};
 
     render() {
+        const { withRouteHighlight, type } = this.props;
         const route = this.getRoute();
         const span = this.getRouteHighlight();
         const point = this.getPoint();
         const tail = this.getSpeedTail();
-        const { withRouteHighlight, type } = this.props;
         return (
             <div className={type === "small" ? "smallMapContainer" : "mapContainer"}>
                 <MapGL

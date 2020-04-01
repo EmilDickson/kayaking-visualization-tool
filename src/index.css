@@ -235,7 +235,6 @@ button {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #C7C7C7;
 }
 
 .addStart {
@@ -250,12 +249,22 @@ button {
   border: none;
 }
 
-.addStart:hover, .addStart:focus {
+.addStart:hover, .addStart:focus, .addStart:active {
   background-color: green;
+}
+
+.dataItemsHeadline {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 7px;
+  height: 40px;
+  background-color: #626262;
 }
 
 .dataItem {
   width: 100%;
+  background-color: rgb(179, 178, 178);
 }
 
 .dataItemHeader {
@@ -263,6 +272,7 @@ button {
   grid-template-columns: 20% 60% 20%;
   height: 45px;
   text-align: center;
+  background-color: rgb(126, 109, 138);
 }
 
 .dataItemTitle {
