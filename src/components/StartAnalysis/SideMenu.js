@@ -32,7 +32,7 @@ class SideMenu extends Component {
                 <div className="radarChartSideMenu">
                     <div className="dataItemsHeadline">ALL STARTS</div>
                     {dataItemObjects}
-                    <Button className="addStart" onClick={this.addNewDataItem}>
+                    <Button className="addStart" onClick={this.addNewDataItem} disabled={dataItems.length > 9}>
                         <FontAwesomeIcon icon={faPlusCircle} />
                     </Button>
                 </div>

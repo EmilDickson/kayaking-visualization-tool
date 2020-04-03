@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import AnyChart from "anychart-react";
 import anychart from 'anychart';
 
+import MiniChart from './MiniChart';
+
+
 class RadarChartView extends Component {
     renderChartDataSeries = () => {
         const { dataItems, variables } = this.props;
@@ -54,23 +57,33 @@ class RadarChartView extends Component {
                 .align('center')
                 .position('center-bottom')
                 .enabled(true);
-        // set container id for the chart
-        /* chart.container('container'); */
-        // initiate chart drawing
-        /* chart.draw(); */
-
         return chart;
+    }
+
+    createMiniGraphs = () => {
+        const { dataItems } = this.props;
+        let miniGraphs = [];
+        for ( let i = 0; i < dataItems.length; i++) {
+            if (dataItems[i].active) {
+                miniGraphs.push(<MiniChart dataItem={dataItems[i]} key={"miniGraph_" + dataItems[i].id} />);
+            }
+        }
+        return miniGraphs;
     }
 
     render() {
         const chart = this.renderChart();
+        /* const miniGraphs = this.createMiniGraphs(); */
         return(
-            <div>
+            <div className="radarChartView">
                 <AnyChart 
-                    width={800}
-                    height={420}
+                    width={430}
+                    height={600}
                     instance={chart} 
                 />
+                <div className="spanView">
+                    {"miniGraphs placeholder"}
+                </div>
             </div>
         )
     }

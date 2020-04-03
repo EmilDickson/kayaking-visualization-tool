@@ -43,6 +43,7 @@ class DataItem extends Component {
                 <div className='dataItem'>
                     <div
                         className='dataItemHeader'
+                        style={{ backgroundColor: dataItem.color }}
                     >
                         <Button
                             variant={dataItem.active ? "info" : "secondary"}
@@ -61,7 +62,8 @@ class DataItem extends Component {
                                 }
                                 style={{
                                     marginTop: "-7px",
-                                    marginLeft: "-5px"
+                                    marginLeft: "-5px",
+                                    position: 'absolute',
                                 }}
                             />
                         </Button>
@@ -85,7 +87,8 @@ class DataItem extends Component {
                                 }
                                 style={{
                                     marginTop: "-7px",
-                                    marginLeft: "-5px"
+                                    marginLeft: "-5px",
+                                    position: 'absolute',
                                 }}
                             />
                         </Button>

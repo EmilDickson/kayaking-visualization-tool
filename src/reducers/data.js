@@ -49,9 +49,13 @@ const setSelectedPoint = (state, action) => {
 }
 
 const createDataItem = (state, action) => {
+    const colors = ["#A6CEF6", "#7BA6DE", "#EBA476", "#FBE49C", "#89939A", "#BDC5C5", "#DE816E", "#7DADB5", "#90D3C5", "#F7C47F"]
+    const colorIndex = state.dataItems.length;
     const maxMin = getMaxMin(action.dataItem.data);
+    action.dataItem["color"] = colors[colorIndex];
     action.dataItem["maxInDataSelection"] = maxMin.max;
     action.dataItem["minInDataSelection"] = maxMin.min;
+    action.dataItem["graphOpen"] = false;
     return {
         ...state,
         dataItems: [...state.dataItems, action.dataItem]

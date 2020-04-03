@@ -293,3 +293,30 @@ button {
   margin-left: 5%;
   width: 90%;
 }
+
+.radarChartView {
+  display: flex;
+  width: 100%;
+}
+
+.radarChartView .anychart-ui-support {
+  max-width: 430px;
+}
+
+.spanView {
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+}
+
+.miniGraph {
+  height: 100%;
+}
+
+.miniGraphHeader {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  height: 30px;
+  text-align: center;
+  background-color: rgb(126, 109, 138);
+}
