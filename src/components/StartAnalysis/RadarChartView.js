@@ -13,7 +13,7 @@ class RadarChartView extends Component {
         for (let i = 0; i < variables.length; i++) {
             if (variables[i].active && variables[i].name !== "time") {
                 let variableSeries = [variables[i].name];
-                for (let j = 0; j < dataItems.length; j++) {
+                for (let j = 0, length = dataItems.length; j < length; j++) {
                     const dataItem = {...dataItems[j]}
                     if (dataItem.active) {
                         const dataMax = dataItem.maxInDataSelection[variables[i].name];
@@ -73,7 +73,7 @@ class RadarChartView extends Component {
 
     render() {
         const chart = this.renderChart();
-        /* const miniGraphs = this.createMiniGraphs(); */
+        const miniGraphs = this.createMiniGraphs();
         return(
             <div className="radarChartView">
                 <AnyChart 
@@ -82,7 +82,7 @@ class RadarChartView extends Component {
                     instance={chart} 
                 />
                 <div className="spanView">
-                    {"miniGraphs placeholder"}
+                    {miniGraphs}
                 </div>
             </div>
         )

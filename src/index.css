@@ -309,14 +309,15 @@ button {
   width: 430px;
 }
 
-.miniGraph {
-  height: 100%;
-}
-
 .miniGraphHeader {
   display: grid;
   grid-template-columns: 60% 40%;
   height: 30px;
   text-align: center;
   background-color: rgb(126, 109, 138);
+}
+
+.miniGraphWindow .spanChartContainer {
+  font-size: 0.75em;
+  height: 430px;
 }

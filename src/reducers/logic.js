@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     timelinePoints: [],
     timelinePoint: [0],
     spanChartElement: { d3: "" },
+    miniSpanChartElement: { d3: "" },
     selectedView: "primary"
 }
 
@@ -44,6 +45,15 @@ const setSpanChartElement = (state, action) => {
     }
 }
 
+const setMiniSpanChartElement = (state, action) => {
+    return {
+        ...state,
+        miniSpanChartElement: {
+            d3: action.element
+        }
+    }
+}
+
 const switchSelectedView = (state) => {
     const newView = state.selectedView === "primary" ? "secondary" : "primary";
     return {
@@ -68,6 +78,9 @@ function logicReducer(state = INITIAL_STATE, action) {
         }
         case "SET_SPAN_CHART_ELEMENT": {
             return setSpanChartElement(state, action)
+        }
+        case "SET_MINI_SPAN_CHART_ELEMENT": {
+            return setMiniSpanChartElement(state, action)
         }
         case "SWITCH_SELECTED_VIEW": {
             return switchSelectedView(state)

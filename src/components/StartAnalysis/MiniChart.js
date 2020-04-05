@@ -4,7 +4,7 @@ import { Button, Collapse } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-import MiniLineChart from './MiniLineChart';
+import MiniSpanChart from './MiniSpanChart';
 
 class MiniChart extends Component {
     render() {
@@ -43,7 +43,7 @@ class MiniChart extends Component {
                 </div>
                 <Collapse in={dataItem.graphOpen}>
                     <div className="miniGraphWindow">
-                        <MiniLineChart dataItem={dataItem} />
+                        <MiniSpanChart dataItem={dataItem} />
                     </div>
                 </Collapse>
             </div>

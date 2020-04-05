@@ -52,9 +52,13 @@ class App extends Component {
             this.props.setTimelinePoint(Math.round(data.length / 8));
             const initialDataItem = {
                 id: 1,
-                data: data.slice(lowBound, highBound),
-                selectedPoint: data[point],
-                timelinePoints: timelinePoints,
+                data: data.slice(Math.round(data.length / 8), Math.round(data.length / 6)),
+                selectedPoint: data[Math.round(data.length / 7)],
+                timelinePoints: [
+                    Math.round(data.length / 8),
+                    Math.round(data.length / 7),
+                    Math.round(data.length / 6)
+                ],
                 active: true,
                 open: false,
             }

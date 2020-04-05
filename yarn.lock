@@ -9050,6 +9050,18 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
+jscharting-react@^1.1.0-7:
+  version "1.1.0-7"
+  resolved "https://registry.yarnpkg.com/jscharting-react/-/jscharting-react-1.1.0-7.tgz#c2a8dee5ed1a5e44abe7162689da506937d7046a"
+  integrity sha512-/VUe7ZgNhID6WVLq7/kMeRWWwXJ2GUlKBZzz8dNloT0SDnviMjQDD2pFpQtT3PK1ELTUhshe8ruJSoyBOd28kA==
+  dependencies:
+    jscharting "^2.9.0-7"
+
+jscharting@^2.9.0-7:
+  version "2.9.0-8"
+  resolved "https://registry.yarnpkg.com/jscharting/-/jscharting-2.9.0-8.tgz#1d43f23596c3fa6c4a6a19ffab60a03fc7ee7a5c"
+  integrity sha512-hmVc9DkYMkeoI/2wkwd5Wetb3jOr96CN6kBYctEmMhhjkJvdb0enJ8bYQdxL9GXZHEgfaz+ZmLG6Uy1R9q+RUQ==
+
 jsdom@^11.5.1:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.12.0.tgz#1a80d40ddd378a1de59656e9e6dc5a3ba8657bc8"
