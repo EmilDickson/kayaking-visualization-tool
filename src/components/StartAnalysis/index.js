@@ -4,23 +4,23 @@ import { connect } from 'react-redux';
 import Loading from '../Loading';
 import ViewSwitcher from "../ViewSwitcher";
 import RadarChartView from './RadarChartView';
-import BarChartView from './BarChartView';
+import LineChartView from './LineChartView';
 import SideMenu from './SideMenu';
 
 class StartAnalysis extends Component {
     render() {
-        const { data, dataSelection, selectedView, dataInitialized } = this.props;
+        const { selectedView, dataInitialized } = this.props;
         if (dataInitialized) {
             return(
                 <div className="rightDataManagementContainer">
                     {selectedView === "primary" ? (
                         <RadarChartView />
                     ) : (
-                        <BarChartView />
+                        <LineChartView />
                     )}
                     <ViewSwitcher 
                         primary="RadarChartView"
-                        secondary="BarChartView"
+                        secondary="SpanLineChart"
                         selected={selectedView}
                         handleViewSwitch={() => this.props.switchSelectedView()}
                     />
@@ -34,14 +34,12 @@ class StartAnalysis extends Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.dataState.data,
-    dataSelection: state.dataState.dataSelection,
     selectedView: state.logicState.selectedView,
     dataInitialized: state.dataState.dataInitialized,
 })
 
 const mapDispatchToProps = dispatch => ({
-    switchSelectedView: () => dispatch({ type: "SWITCH_SELECTED_VIEW" })
+    switchSelectedView: () => dispatch({ type: "SWITCH_SELECTED_VIEW" }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartAnalysis)

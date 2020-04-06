@@ -5,7 +5,8 @@ const INITIAL_STATE = {
     timelinePoint: [0],
     spanChartElement: { d3: "" },
     miniSpanChartElement: { d3: "" },
-    selectedView: "primary"
+    selectedView: "primary",
+    chosenStartLineChart: false,
 }
 
 const setTimelinePlayingPoint = (state, action) => {
@@ -62,6 +63,13 @@ const switchSelectedView = (state) => {
     }
 }
 
+const setChosenStartLineChart = (state, action) => {
+    return {
+        ...state,
+        chosenStartLineChart: action.dataItemId
+    }
+}
+
 function logicReducer(state = INITIAL_STATE, action) {
     switch(action.type) {
         case "SET_TIMELINE_PLAYING_POINT": {
@@ -84,6 +92,9 @@ function logicReducer(state = INITIAL_STATE, action) {
         }
         case "SWITCH_SELECTED_VIEW": {
             return switchSelectedView(state)
+        }
+        case "SET_CHOSEN_START_LINE_CHART": {
+            return setChosenStartLineChart(state, action)
         }
         default:
             return state;

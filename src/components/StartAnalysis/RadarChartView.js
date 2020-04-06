@@ -77,7 +77,7 @@ class RadarChartView extends Component {
         return(
             <div className="radarChartView">
                 <AnyChart 
-                    width={430}
+                    width={434}
                     height={600}
                     instance={chart} 
                 />

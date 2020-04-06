@@ -57,6 +57,14 @@ button {
   background-color: hsla(280, 59%, 18%, 0.8);
 }
 
+.navigation .dropdown-item {
+  color: #EEF0EB;
+}
+
+.navigation .dropdown-item:hover {
+  color: black;
+}
+
 #dropdown-menu-align-right {
   background-color: transparent;
   border: none;
@@ -320,4 +328,19 @@ button {
 .miniGraphWindow .spanChartContainer {
   font-size: 0.75em;
   height: 430px;
+}
+
+#lineChartChoiceButton {
+  width: 100%;
+}
+
+.lineChartChoiceMenu {
+  width: 95%;
+}
+
+.pleaseChooseMessage {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 35%;
 }
