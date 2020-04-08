@@ -28,6 +28,9 @@ const NavigationAuth = ({ authUser }) => (
     <Dropdown.Item href={ROUTES.START_ANALYSIS}>
       Start analysis
     </Dropdown.Item>
+    <Dropdown.Item href={ROUTES.BOAT_MOVEMENT}>
+      Boat movement
+    </Dropdown.Item>
     <Dropdown.Item href={ROUTES.ACCOUNT}>
       Account
     </Dropdown.Item>

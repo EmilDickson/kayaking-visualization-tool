@@ -11,3 +11,4 @@ export const ADMIN_DETAILS = '/admin/:id';
 export const COMPARE_ALL = '/compare_all';
 export const SPEED_COMPARISON = '/speed_comparison';
 export const START_ANALYSIS = '/start_analysis';
+export const BOAT_MOVEMENT = '/boat_movement';

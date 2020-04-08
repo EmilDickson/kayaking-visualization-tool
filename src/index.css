@@ -344,3 +344,37 @@ button {
   text-align: center;
   padding-top: 35%;
 }
+
+.boatViewContainer {
+  display: grid;
+  grid-template-rows: 45% 5% 45% 5%;
+  height: 100%;
+}
+
+.backAndTopView {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 1000px;
+  height: 300px;
+}
+
+.backView, .topView {
+  width: 500px;
+  height: 300px;
+}
+
+.boatViewLegend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.legendValue {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.75em;
+}
+
+.boatViewLineChart {
+  height: 300px;
+}

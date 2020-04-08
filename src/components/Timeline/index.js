@@ -4,6 +4,7 @@ import "rc-slider/assets/index.css";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
+import { debounce } from 'lodash';
 
 class Timeline extends Component {
     timeOutPoint = (i, valuesIn) => {

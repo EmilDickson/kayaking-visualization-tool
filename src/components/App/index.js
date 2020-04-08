@@ -21,6 +21,7 @@ import StartAnalysis from "../StartAnalysis";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
+import BoatMovement from "../BoatMovement";
 
 class App extends Component {
     componentDidMount() {
@@ -99,6 +100,10 @@ class App extends Component {
                     <Route
                         path={ROUTES.START_ANALYSIS}
                         component={StartAnalysis}
+                    />
+                    <Route
+                        path={ROUTES.BOAT_MOVEMENT}
+                        component={BoatMovement}
                     />
                 </div>
             </Router>
