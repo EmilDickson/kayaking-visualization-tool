@@ -24,7 +24,7 @@ class BoatMovement extends Component {
                         selected={selectedView}
                         handleViewSwitch={() => this.props.switchSelectedView()}
                     />
-                    <BoatRoute withRouteHighLight={false} />
+                    <BoatRoute withRouteHighlight={true} />
                 </div>
             )
         } else {

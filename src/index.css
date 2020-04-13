@@ -24,6 +24,14 @@ button {
   width: 100%;
 }
 
+.landingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 50vh;
+}
+
 /* Variables */
 
 .variables {
@@ -347,8 +355,13 @@ button {
 
 .boatViewContainer {
   display: grid;
-  grid-template-rows: 45% 5% 45% 5%;
+  grid-template-rows: 43% 4% 3% 36% 14%;
   height: 100%;
+}
+
+.boatBubbleChartContainer {
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 
 .backAndTopView {
@@ -369,6 +382,13 @@ button {
   justify-content: space-evenly;
 }
 
+.boatViewBottomLegend {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 0.75em;
+}
+
 .legendValue {
   display: flex;
   flex-direction: row;
@@ -377,4 +397,66 @@ button {
 
 .boatViewLineChart {
   height: 300px;
+}
+
+.ct-line {
+  stroke-width: 1px !important;
+}
+
+.ct-line:hover {
+  stroke-width: 4px !important;
+}
+
+/* Byt färg! */
+.chartist-deltaVNeg {
+  stroke: fuchsia;
+}
+/* Byt färg! */
+.chartist-deltaVPos {
+  stroke: lime;
+}
+/* Byt färg! */
+.chartist-pulse {
+  stroke: silver;
+}
+
+.chartist-speed {
+  stroke: cyan;
+}
+
+.chartist-xAcc {
+  stroke: red;
+}
+
+.chartist-yAcc {
+  stroke: purple;
+}
+
+.chartist-zAcc {
+  stroke: blue;
+}
+
+.chartist-xGyro {
+  stroke: orange;
+}
+
+.chartist-yGyro {
+  stroke: brown;
+}
+
+.chartist-zGyro {
+  stroke: green;
+}
+
+.chartist-verticalLine {
+  stroke: black;
+}
+
+.bubbleChartView {
+  display: grid;
+  grid-template-rows: 90% 10%;
+}
+
+.bubbleChartTooltip {
+  margin: 10px;
 }

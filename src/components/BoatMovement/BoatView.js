@@ -78,40 +78,64 @@ class BoatView extends Component {
         <div style={{ height: '10px', width: '10px', backgroundColor: color, margin: '5px 10px 0 0'}} />
     )
 
-    createLegend = () => {
+    createTopLegend = () => {
         const { selectedPoint } = this.props;
         return (
             <div className="boatViewLegend">
                 <div className="legendValue">
                     {this.colorSquare('red')}
-                    {"xAcc: " + selectedPoint["xAcc"]}
+                    <strong>xAcc:</strong>{"\xa0" + selectedPoint["xAcc"]}
                 </div>
                 <div className="legendValue">
                     {this.colorSquare('blue')}
-                    {"zAcc: " + selectedPoint["zAcc"]}
+                    <strong>zAcc:</strong>{"\xa0" + selectedPoint["zAcc"]}
                 </div>
                 <div className="legendValue">
                     {this.colorSquare('green')}
-                    {"zGyro: " + selectedPoint["zGyro"]}
+                    <strong>zGyro:</strong>{"\xa0" + selectedPoint["zGyro"]}
                 </div>
                 <div className="legendValue">
                     {this.colorSquare('cyan')}
-                    {"speed: " + selectedPoint["speed"]}
+                    <strong>speed:</strong>{"\xa0" + selectedPoint["speed"]}
                 </div>
                 <div className="legendValue">
                     {this.colorSquare('purple')}
-                    {"yAcc: " + selectedPoint["yAcc"]}
+                    <strong>yAcc:</strong>{"\xa0" + selectedPoint["yAcc"]}
                 </div>
                 <div className="legendValue">
                     {this.colorSquare('orange')}
-                    {"xGyro: " + selectedPoint["xGyro"]}
+                    <strong>xGyro:</strong>{"\xa0" + selectedPoint["xGyro"]}
                 </div>
                 <div className="legendValue">
                     {this.colorSquare('brown')}
-                    {"yGyro: " + selectedPoint["yGyro"]}
+                    <strong>yGyro:</strong>{"\xa0" + selectedPoint["yGyro"]}
                 </div>
             </div>
         )
+    }
+
+    createBottomLegend = () => {
+        const { selectedPoint } = this.props;
+        return (
+            <div className="boatViewLegend">
+                <div className="legendValue">
+                    {this.colorSquare('lime')}
+                    <strong>deltaVPos:</strong>{"\xa0" + selectedPoint["deltaVPos"]}
+                </div>
+                <div className="legendValue">
+                    {this.colorSquare('fuchsia')}
+                    <strong>deltaVNeg:</strong>{"\xa0" + selectedPoint["deltaVNeg"]}
+                </div>
+                <div className="legendValue">
+                    {this.colorSquare('silver')}
+                    <strong>pulse:</strong>{"\xa0" + selectedPoint["pulse"]}
+                </div>
+                <div className="legendValue">
+                    {this.colorSquare('white')}
+                    <strong>time:</strong>{"\xa0" + selectedPoint["time"]}
+                </div>
+            </div>
+        );
     }
 
     render() {
@@ -179,11 +203,12 @@ class BoatView extends Component {
                         { xEllipse }
                     </div>
                 </div>
-                {this.createLegend()}
+                {this.createTopLegend()}
+                {this.createBottomLegend()}
                 <div className='boatViewLineChart'>
                     <BoatViewLineChart/>
                 </div>
-                <Timeline withSpan={false} withPlayButtons={true} />
+                <Timeline withSpan={true} withPlayButtons={true} />
             </div>
         );
     }
