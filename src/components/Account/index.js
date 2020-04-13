@@ -7,7 +7,7 @@ import PasswordChangeForm from "../PasswordChange";
 import { withAuthorization } from "../Session";
 
 const AccountPage = ({ authUser }) => (
-  <div>
+  <div className="simpleContainer">
     <h1>Account: {authUser.email}</h1>
     <PasswordForgetForm />
     <PasswordChangeForm />

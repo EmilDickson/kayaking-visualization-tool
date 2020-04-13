@@ -8,8 +8,8 @@ import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
+  <div className="simpleContainer">
+    <h1>Create users</h1>
     <SignUpForm />
   </div>
 );
@@ -90,7 +90,7 @@ class SignUpFormBase extends Component {
       username === "";
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className="signUpForm">
         <input
           name="username"
           value={username}
@@ -120,7 +120,7 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         <label>
-          Admin:
+          Admin:{'\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0'}
           <input
             name="isAdmin"
             type="checkbox"

@@ -21,9 +21,10 @@ class Variables extends Component {
   };
 
   render() {
+    const { authUser } = this.props;
     return (
       <div className="variables">
-        {this.renderVariables()}
+        { authUser ? this.renderVariables() : "Hi, please login to use the tool!"}
         <div>info</div>
       </div>
     );
@@ -31,6 +32,7 @@ class Variables extends Component {
 }
 
 const mapStateToProps = state => ({
+  authUser: state.sessionState.authUser,
   variables: state.variableState.variables
 });
 

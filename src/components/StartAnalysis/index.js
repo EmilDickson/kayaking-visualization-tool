@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from "recompose";
 
+import { withAuthorization } from "../Session";
 import Loading from '../Loading';
 import ViewSwitcher from "../ViewSwitcher";
 import RadarChartView from './RadarChartView';
@@ -42,4 +44,9 @@ const mapDispatchToProps = dispatch => ({
     switchSelectedView: () => dispatch({ type: "SWITCH_SELECTED_VIEW" }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StartAnalysis)
+const condition = (authUser) => !!authUser;
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthorization(condition)
+)(StartAnalysis)

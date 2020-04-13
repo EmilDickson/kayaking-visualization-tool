@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from "recompose";
 
+import { withAuthorization } from "../Session";
 import BoatView from './BoatView';
 import BubbleChart from './BubbleChart';
 import Loading from '../Loading';
@@ -42,4 +44,9 @@ const mapDispatchToProps = dispatch => ({
     switchSelectedView: () => dispatch({ type: "SWITCH_SELECTED_VIEW" }),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(BoatMovement)
+const condition = (authUser) => !!authUser;
+
+export default compose(
+    connect(mapStateToProps,mapDispatchToProps),
+    withAuthorization(condition)
+)(BoatMovement)

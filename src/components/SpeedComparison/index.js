@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { compose } from "recompose";
 import AnyChart from "anychart-react";
 
+import { withAuthorization } from "../Session";
 import Loading from "../Loading";
 import Timeline from "../Timeline";
 import BoatRoute from "../BoatRoute";
@@ -161,4 +163,9 @@ const mapStateToProps = state => ({
     minInDataSelection: state.dataState.minInDataSelection
 });
 
-export default connect(mapStateToProps)(SpeedComparison);
+const condition = (authUser) => !!authUser;
+
+export default compose(
+    connect(mapStateToProps),
+    withAuthorization(condition)
+)(SpeedComparison);

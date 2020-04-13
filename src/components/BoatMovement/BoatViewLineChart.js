@@ -3,43 +3,6 @@ import { connect  } from 'react-redux';
 import ChartistGraph from 'react-chartist';
 
 class BoatViewLineChart extends PureComponent {
-    /* generateLineData = () => {
-        const { data, variables } = this.props;
-        const variableColors = [
-            "#0000E3",
-            "#0047FF",
-            "#00ABFF",
-            "#0FFFEF",
-            "#43FFBB",
-            "#73FF8B",
-            "#A7FF57",
-            "#FFEF00",
-            "#FF8B00",
-            "#FF5700",
-            "#FF2300",
-            "#ED0000",
-            "#830000"
-        ];
-        let dataOut = []
-        for (let i = 0; i < variables.length; i++) {
-            if (variables[i].active && variables[i].name !== "time") {
-                let elements = [];
-                for (let j = 0, length = data.length; j < length; j++) {
-                    elements.push({
-                        y: data[j][variables[i].name],
-                        x: j.toString()
-                    });
-                }
-                dataOut.push({
-                    name: variables[i].name,
-                    color: variableColors[i],
-                    points: elements
-                });
-            }
-        }
-        return dataOut;
-    } */
-
     getMaxMin = () => {
         const { variables, maxInDataSelection, minInDataSelection } = this.props;
         let maxValues = [];
@@ -109,26 +72,12 @@ class BoatViewLineChart extends PureComponent {
         return dataOut;
     }
 
-    /* generateSeriesOptions = (series) => {
-        let seriesOptions = {}
-        for (let i = 0; i < series.length; i++) {
-            seriesOptions[series[i][0].name] = {
-                className: "chartist-" + series[i][0].name
-            }
-        }
-        return seriesOptions;
-    } */
-
     render() {
-        const { timelinePoints } = this.props;
         const data = this.generateLineData();
-        const selectedPoint = timelinePoints[1] - timelinePoints[0];
-        /* const seriesOptions = this.generateSeriesOptions(data.series); */
         const options = {
             width: '1000px',
             height: '275px',
             showPoint: false,
-            /* series: seriesOptions, */
             axisX: {
                 labelInterpolationFnc: function(e) { return "" },
                 showGrid: false
@@ -137,32 +86,7 @@ class BoatViewLineChart extends PureComponent {
                 showGrid: false,
             },
         };
-        /* console.log(seriesOptions); */
         const type = "Line";
-        // const { timelinePoint } = this.props;
-        // const lineConfig = {
-        //     type: "line",
-        //     width: 1050,
-        //     height: 300,
-        //     series: this.generateLineData(),
-        //     xAxis: { 
-        //         visible: false,
-        //         crosshair_enabled: true,
-        //         customTicks: [{
-        //             value: timelinePoint,
-        //             includeInScale: true, 
-        //             line_length: 9,
-        //             gridLine: { color: '#568bdc', width: 2 },
-        //         }]
-        //     },
-        //     title_label_text: "All variables",
-        //     legend: { 
-        //         template: '%icon %name', 
-        //         margin: 0, 
-        //         position: 'top right'
-        //     }
-        // };
-        // return <JSCharting options={lineConfig} mutable={true} />
         return <ChartistGraph className="ct-chart" data={data} options={options} type={type} />
     }
 }

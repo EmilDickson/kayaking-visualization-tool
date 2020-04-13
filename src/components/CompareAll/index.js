@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 
-import { withFirebase } from "../Firebase";
+import { withAuthorization } from "../Session";
 import BoatRoute from "../BoatRoute";
 import ParCoords from "../ParCoords";
 import Loading from "../Loading";
@@ -48,7 +48,9 @@ const mapDispatchToProps = dispatch => ({
     switchSelectedView: () => dispatch({ type: "SWITCH_SELECTED_VIEW" })
 });
 
+const condition = (authUser) => !!authUser;
+
 export default compose(
-    withFirebase,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthorization(condition)
 )(CompareAll);

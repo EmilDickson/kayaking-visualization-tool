@@ -4,70 +4,7 @@ import Chart from "react-apexcharts";
 
 import Timeline from "../Timeline";
 
-/* const BubbleChartContainer = (data, side) => {
-    const chartConfig = {
-        type: "bubble",
-        annotations: [
-            {
-                label: {
-                    text: side === "left" ? "Acceleration" : "Rotation",
-                },
-                position: "top left",
-            },
-        ],
-        width: 500,
-        height: 600,
-        series: data,
-        animation_duration: 500,
-        legend: { template: "%lecb,%icon,%name", position: "inside left top" },
-    };
-    return <JSCharting options={chartConfig} mutable={true} />;
-}; */
-
 class BubbleChart extends Component {
-    // generateChartData = () => {
-    //     const { data, selectedPoint } = this.props;
-    //     let dataOut = {
-    //         chart1: [],
-    //         chart2: [],
-    //     };
-    //     // Ngn slags for-loop som lägger in saker i rätt lådor baserat på variabler.
-    //     for (let i = 0, length = data.length; i < length; i++) {
-    //         dataOut.chart1.push({
-    //             id: data[i]["time"],
-    //             x: data[i]["xAcc"],
-    //             y: data[i]["yAcc"],
-    //             z: data[i]["zAcc"],
-    //             attributes_state: data[i]["time"],
-    //         });
-    //         dataOut.chart2.push({
-    //             id: data[i]["time"],
-    //             x: data[i]["xGyro"],
-    //             y: data[i]["yGyro"],
-    //             z: data[i]["zGyro"],
-    //             attributes_state: data[i]["time"],
-    //         });
-    //     }
-    //     return dataOut;
-    // };
-
-    /* DUMMY DATA BELOW
-    generateChartData = () => {
-        const { dataSelection } = this.props;
-        const count = dataSelection.length;
-        let i = 0;
-        let series = [];
-        while (i < count) {
-            const x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;;
-            const y = Math.floor(Math.random() * (60 - 10 + 1)) + 10;
-            const z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
-
-            series.push([x, y, z])
-            i++
-        }
-        return series;
-    } */
-
     generateChartData = () => {
         const { dataSelection } = this.props;
         const count = dataSelection.length;
@@ -192,8 +129,6 @@ class BubbleChart extends Component {
     };
 
     render() {
-        // Här genererar vi lite data först, sedan skapar vi två bubble charts och skickar varsin del av datat + left/right
-        // const data = this.generateChartData();
         const { selectedPoint } = this.props;
         const data = this.generateChartData();
         const accSeries = [

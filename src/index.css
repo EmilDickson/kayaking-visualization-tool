@@ -24,10 +24,19 @@ button {
   width: 100%;
 }
 
-.landingPage {
+.simpleContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 15vw;
+  justify-content: space-evenly;
+  height: 50vh;
+  width: 70vw;
+}
+
+.signUpForm {
+  display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   height: 50vh;
 }
@@ -40,6 +49,7 @@ button {
   padding: 20px;
   width: 100%;
   background-color: #532065;
+  color: grey;
 }
 
 .activeVariable {
