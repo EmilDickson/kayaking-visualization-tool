@@ -1,8 +1,6 @@
 import * as d3 from "d3";
 
 const getElement = (data, color) => {
-    console.log("The data is: ", data)
-
     var node = document.createElement("div");
 
     var margin = { top: 50, right: 50, bottom: 50, left: 100 },

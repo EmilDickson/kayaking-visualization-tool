@@ -13,6 +13,8 @@ import PasswordForgetPage from "../PasswordForget";
 import HomePage from "../Home";
 import AccountPage from "../Account";
 import AdminPage from "../Admin";
+import About from "../About";
+import Info from "../Info";
 
 /* Visualization views */
 import CompareAll from "../CompareAll";
@@ -34,6 +36,7 @@ class App extends Component {
             this.props.setDataSelection(data.slice(lowBound, highBound));
             this.props.setSelectedPoint(data[point]);
             const rawVariables = Object.keys(data[0]);
+            // Variable stuff here
             let variables = [];
             for (let i = 0; i < rawVariables.length; i++) {
                 if (rawVariables[i] !== "lat" && rawVariables[i] !== "long") {
@@ -44,13 +47,16 @@ class App extends Component {
                 }
             }
             this.props.setVariables(variables);
+            // Timeline points/point stuff here
             const timelinePoints = [
                 Math.round(data.length / 8),
                 Math.round(data.length / 6),
                 Math.round(data.length / 4)
             ];
             this.props.setTimelinePoints(timelinePoints);
-            this.props.setTimelinePoint(Math.round(data.length / 8));
+            const timelinePoint = Math.round(data.length / 8);
+            this.props.setTimelinePoint(timelinePoint);
+            // DataItem stuff here.
             const initialDataItem = {
                 id: 1,
                 data: data.slice(Math.round(data.length / 8), Math.round(data.length / 6)),
@@ -64,6 +70,19 @@ class App extends Component {
                 open: false,
             }
             this.props.createDataItem(initialDataItem);
+            this.props.firebase.getUserData().once("value", userSnapshot => {
+                const userData = userSnapshot.val();
+                const userTimelinePoints = userData.timelineData;
+                const userVariables = userData.variableData.variables;
+                const userDataItems = userData.dataItems;
+                if (userTimelinePoints) {
+                    this.props.setTimelinePoints(userTimelinePoints.timelinePoints);
+                    this.props.setTimelinePoint(userTimelinePoints.timelinePoint);
+                }
+                if (userVariables) {
+                    this.props.setVariables(userVariables);
+                }
+            });
             // All data initialization done, set "data initialized"
             this.props.setDataInitialized();
         });
@@ -92,6 +111,8 @@ class App extends Component {
                     <Route path={ROUTES.HOME} component={HomePage} />
                     <Route path={ROUTES.ACCOUNT} component={AccountPage} />
                     <Route path={ROUTES.ADMIN} component={AdminPage} />
+                    <Route path={ROUTES.ABOUT} component={About} />
+                    <Route path={ROUTES.INFO} component={Info} />
                     <Route path={ROUTES.COMPARE_ALL} component={CompareAll} />
                     <Route
                         path={ROUTES.SPEED_COMPARISON}

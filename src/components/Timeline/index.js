@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import { connect } from "react-redux";
+import { compose } from "recompose";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
-import { debounce } from 'lodash';
+
+import { withFirebase } from "../Firebase";
 
 class Timeline extends Component {
     timeOutPoint = (i, valuesIn) => {
@@ -82,6 +84,7 @@ class Timeline extends Component {
             );
             this.props.setSelectedPoint(this.props.data[rangeChange[1]]);
             this.props.setTimelinePoints(rangeChange);
+            this.props.firebase.setTimelinePoints(rangeChange, rangeChange[1]);
         } else {
             this.props.setSelectedPoint(this.props.data[rangeChange[0]]);
             this.props.setTimelinePoint(rangeChange[0]);
@@ -93,10 +96,6 @@ class Timeline extends Component {
         updatedDataItem.data = this.props.data.slice(rangeChange[0], rangeChange[2]);
         updatedDataItem.selectedPoint = this.props.data[rangeChange[1]];
         updatedDataItem.timelinePoints = rangeChange;
-        /* this.props.setDataSelection(
-            this.props.data.slice(rangeChange[0], rangeChange[2])
-        ); */
-        /* this.props.setSelectedPoint(this.props.data[rangeChange[1]]); */
         this.props.updateDataItem(updatedDataItem);
     };
 
@@ -224,4 +223,7 @@ const mapDispatchToProps = dispatch => ({
     updateDataItem: dataItem => dispatch({ type: "UPDATE_DATA_ITEM", dataItem })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
+export default compose(
+    withFirebase,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Timeline);

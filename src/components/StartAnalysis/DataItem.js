@@ -36,8 +36,12 @@ class DataItem extends Component {
         );
     };
 
+    handleItemDeletion = (dataItem) => {
+        this.props.deleteDataItem(dataItem);
+    }
+
     render() {
-        const { dataItem, dataInitialized, deleteDataItem, updateDataItem } = this.props;
+        const { dataItem, dataInitialized, updateDataItem } = this.props;
         if (dataInitialized) {
             return (
                 <div className='dataItem'>
@@ -108,7 +112,7 @@ class DataItem extends Component {
                                 <Timeline withSpan={true} dataItem={dataItem} />
                             </div>
                             <Button
-                                onClick={() => deleteDataItem(dataItem)}
+                                onClick={(dataItem) => this.handleItemDeletion(dataItem)}
                                 variant='danger'
                                 style={{ width: "100%", marginTop: "5px" }}
                             >

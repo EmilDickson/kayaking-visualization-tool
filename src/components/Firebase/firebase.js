@@ -64,6 +64,35 @@ class Firebase {
 
   users = () => this.db.ref("users");
 
+  // *** User Data API ***
+
+  setTimelinePoints = (timelinePoints, timelinePoint) => {
+    const uid = this.auth.currentUser.uid;
+    const dbRef = this.db.ref(`users/${uid}/userData/timelineData`);
+    dbRef.set({
+      timelinePoints,
+      timelinePoint
+    });
+  }
+
+  setVariables = (variables) => {
+    const uid = this.auth.currentUser.uid;
+    const dbRef = this.db.ref(`users/${uid}/userData/variableData`);
+    dbRef.set({
+      variables
+    });
+  }
+
+  setUserDataItems = (dataItems) => {
+    const uid = this.auth.currentUser.uid;
+    const dbRef = this.db.ref(`users/${uid}/userData/`);
+    dbRef.set({
+      dataItems
+    });
+  }
+
+  getUserData = () => this.db.ref(`users/${this.auth.currentUser.uid}/userData`);
+
   // *** Message API (template for other stuff later...) ***
 
   message = uid => this.db.ref(`messages/${uid}`);

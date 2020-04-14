@@ -45,7 +45,7 @@ const NavigationAuth = ({ authUser }) => (
       </Dropdown.Item>
     )}
     <div className="menuBottom">
-      <Dropdown.Item className="aboutButton">
+      <Dropdown.Item className="aboutButton" href={ROUTES.ABOUT}>
         ABOUT
       </Dropdown.Item>
       <Dropdown.Item className="exportButton">
