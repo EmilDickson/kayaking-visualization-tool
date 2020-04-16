@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { withFirebase } from "../Firebase";
+import { updateHelper } from "../../dataItemTools";
 
 class Timeline extends Component {
     timeOutPoint = (i, valuesIn) => {
@@ -92,11 +93,14 @@ class Timeline extends Component {
     };
 
     handleRangeChangeDataItem = (rangeChange, dataItem) => {
+        const { dataItems } = this.props;
         let updatedDataItem = { ...dataItem };
         updatedDataItem.data = this.props.data.slice(rangeChange[0], rangeChange[2]);
         updatedDataItem.selectedPoint = this.props.data[rangeChange[1]];
         updatedDataItem.timelinePoints = rangeChange;
-        this.props.updateDataItem(updatedDataItem);
+        const newDataItems = updateHelper(updatedDataItem, dataItems);
+        this.props.firebase.setUserDataItems(newDataItems);
+        this.props.updateDataItem(newDataItems);
     };
 
     render() {
@@ -204,7 +208,8 @@ const mapStateToProps = state => ({
     playingPoint: state.logicState.timelinePlayingPoint,
     playingSpan: state.logicState.timelinePlayingSpan,
     timelinePoints: state.logicState.timelinePoints,
-    timelinePoint: state.logicState.timelinePoint
+    timelinePoint: state.logicState.timelinePoint,
+    dataItems: state.dataState.dataItems,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -220,7 +225,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "SET_TIMELINE_POINTS", timelinePoints }),
     setTimelinePoint: timelinePoint =>
         dispatch({ type: "SET_TIMELINE_POINT", timelinePoint }),
-    updateDataItem: dataItem => dispatch({ type: "UPDATE_DATA_ITEM", dataItem })
+    updateDataItem: newDataItems => dispatch({ type: "UPDATE_DATA_ITEM", newDataItems })
 });
 
 export default compose(

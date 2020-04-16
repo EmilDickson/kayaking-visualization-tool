@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { compose } from "recompose";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faChevronUp,
@@ -9,6 +10,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Button, Collapse } from "react-bootstrap";
 
+import { withFirebase } from "../Firebase";
+import { deleteHelper, updateHelper } from "../../dataItemTools";
 import BoatRoute from "../BoatRoute";
 import Timeline from "../Timeline";
 import Loading from "../Loading";
@@ -36,12 +39,8 @@ class DataItem extends Component {
         );
     };
 
-    handleItemDeletion = (dataItem) => {
-        this.props.deleteDataItem(dataItem);
-    }
-
     render() {
-        const { dataItem, dataInitialized, updateDataItem, deleteDataItem } = this.props;
+        const { dataItem, dataInitialized, updateDataItem, deleteDataItem, dataItems } = this.props;
         if (dataInitialized) {
             return (
                 <div className='dataItem'>
@@ -54,7 +53,9 @@ class DataItem extends Component {
                             onClick={() => {
                                 let updatedDataItem = { ...dataItem }
                                 updatedDataItem.active = !dataItem.active;
-                                updateDataItem(updatedDataItem)
+                                const newDataItems = updateHelper(updatedDataItem, dataItems)
+                                this.props.firebase.setUserDataItems(newDataItems);
+                                updateDataItem(newDataItems);
                             }
                             }
                         >
@@ -78,7 +79,9 @@ class DataItem extends Component {
                             onClick={() => {
                                 let updatedDataItem = { ...dataItem };
                                 updatedDataItem.open = !dataItem.open;
-                                updateDataItem(updatedDataItem);
+                                const newDataItems = updateHelper(updatedDataItem, dataItems);
+                                this.props.firebase.setUserDataItems(newDataItems);
+                                updateDataItem(newDataItems);
                             }}
                             aria-controls='dataWindow'
                             aria-expanded={dataItem.open}
@@ -112,7 +115,11 @@ class DataItem extends Component {
                                 <Timeline withSpan={true} dataItem={dataItem} />
                             </div>
                             <Button
-                                onClick={(e) => deleteDataItem(dataItem)}
+                                onClick={() => {
+                                    const newDataItems = deleteHelper(dataItem, dataItems);
+                                    this.props.firebase.setUserDataItems(newDataItems);
+                                    deleteDataItem(newDataItems);
+                                }}
                                 variant='danger'
                                 style={{ width: "100%", marginTop: "5px" }}
                             >
@@ -132,16 +139,18 @@ const mapStateToProps = state => ({
     maxInDataSelection: state.dataState.maxInDataSelection,
     minInDataSelection: state.dataState.minInDataSelection,
     minInDataSet: state.dataState.minInDataSet,
-    dataInitialized: state.dataState.dataInitialized
+    dataInitialized: state.dataState.dataInitialized,
+    dataItems: state.dataState.dataItems
 });
 
 const mapDispatchToProps = dispatch => ({
-    createDataItem: dataItem =>
-        dispatch({ type: "CREATE_DATA_ITEM", dataItem }),
-    deleteDataItem: dataItem =>
-        dispatch({ type: "DELETE_DATA_ITEM", dataItem }),
-    updateDataItem: dataItem => 
-        dispatch({ type: "UPDATE_DATA_ITEM", dataItem })
+    deleteDataItem: newDataItems =>
+        dispatch({ type: "DELETE_DATA_ITEM", newDataItems }),
+    updateDataItem: newDataItems => 
+        dispatch({ type: "UPDATE_DATA_ITEM", newDataItems })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataItem);
+export default compose(
+    withFirebase,
+    connect(mapStateToProps, mapDispatchToProps)
+)(DataItem);

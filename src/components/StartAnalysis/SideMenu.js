@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
 
+import { createHelper } from "../../dataItemTools";
 import { withFirebase } from "../Firebase";
 import DataItem from "./DataItem";
 import Loading from "../Loading";
@@ -28,7 +29,9 @@ class SideMenu extends Component {
             active: true,
             open: false,
         };
-        createDataItem(dataItem);
+        const newDataItems = createHelper(dataItem, dataItems);
+        this.props.firebase.setUserDataItems(newDataItems);
+        createDataItem(newDataItems);
     };
 
     render() {
@@ -65,8 +68,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    createDataItem: (dataItem) =>
-        dispatch({ type: "CREATE_DATA_ITEM", dataItem }),
+    createDataItem: (newDataItems) =>
+        dispatch({ type: "CREATE_DATA_ITEM", newDataItems }),
 });
 
 export default compose(
