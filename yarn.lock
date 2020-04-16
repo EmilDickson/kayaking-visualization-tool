@@ -12401,6 +12401,13 @@ react-scripts@3.4.0:
   optionalDependencies:
     fsevents "2.1.2"
 
+react-tracker@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-tracker/-/react-tracker-0.0.8.tgz#865906ea0a422839025107d7b97832685de79b89"
+  integrity sha1-hlkG6gpCKDkCUQfXuXgyaF3nm4k=
+  dependencies:
+    prop-types "^15.5.10"
+
 react-transition-group@^4.0.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"
