@@ -69,7 +69,7 @@ class Firebase {
   setTimelinePoints = (timelinePoints, timelinePoint) => {
     const uid = this.auth.currentUser.uid;
     const dbRef = this.db.ref(`users/${uid}/userData/timelineData`);
-    dbRef.set({
+    dbRef.update({
       timelinePoints,
       timelinePoint
     });
@@ -78,7 +78,7 @@ class Firebase {
   setVariables = (variables) => {
     const uid = this.auth.currentUser.uid;
     const dbRef = this.db.ref(`users/${uid}/userData/variableData`);
-    dbRef.set({
+    dbRef.update({
       variables
     });
   }
@@ -86,8 +86,8 @@ class Firebase {
   setUserDataItems = (dataItems) => {
     const uid = this.auth.currentUser.uid;
     const dbRef = this.db.ref(`users/${uid}/userData/`);
-    dbRef.set({
-      dataItems
+    dbRef.update({
+      dataItems: dataItems
     });
   }
 

@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from "recompose";
 import { Button, Collapse } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
+import { withFirebase } from "../Firebase";
+import { updateHelper } from "../../dataItemTools";
 import MiniSpanChart from './MiniSpanChart';
 
 class MiniChart extends Component {
     render() {
-        const { dataItem, updateDataItem } = this.props;
+        const { dataItem, updateDataItem, dataItems } = this.props;
         return(
             <div>
                 <div
@@ -28,7 +31,9 @@ class MiniChart extends Component {
                             onClick={() => {
                                 let updatedDataItem = { ...dataItem };
                                 updatedDataItem.graphOpen = !dataItem.graphOpen;
-                                updateDataItem(updatedDataItem);
+                                const newDataItems = updateHelper(updatedDataItem, dataItems);
+                                this.props.firebase.setUserDataItems(newDataItems);
+                                updateDataItem(newDataItems);
                             }}
                             icon={
                                 dataItem.graphOpen ? faChevronUp : faChevronDown
@@ -58,7 +63,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    updateDataItem: dataItem => dispatch({ type: "UPDATE_DATA_ITEM", dataItem })
+    updateDataItem: newDataItems => dispatch({ type: "UPDATE_DATA_ITEM", newDataItems })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MiniChart)
+export default compose(
+    withFirebase,
+    connect(mapStateToProps, mapDispatchToProps)
+)(MiniChart)

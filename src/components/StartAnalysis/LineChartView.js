@@ -99,7 +99,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateDataItem: dataItem => dispatch({ type: "UPDATE_DATA_ITEM", dataItem }),
     setChosenStartLineChart: dataItemId => dispatch({ type: "SET_CHOSEN_START_LINE_CHART", dataItemId }),
 });
 

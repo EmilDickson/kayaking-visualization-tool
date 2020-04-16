@@ -24,6 +24,7 @@ import StartAnalysis from "../StartAnalysis";
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
 import BoatMovement from "../BoatMovement";
+import { createHelper } from "../../dataItemTools";
 
 class App extends Component {
     componentDidMount() {
@@ -69,18 +70,30 @@ class App extends Component {
                 active: true,
                 open: false,
             }
-            this.props.createDataItem(initialDataItem);
+            const newDataItems = createHelper(initialDataItem, [])
+            this.props.createDataItem(newDataItems);
             this.props.firebase.getUserData().once("value", userSnapshot => {
                 const userData = userSnapshot.val();
-                const userTimelinePoints = userData.timelineData;
-                const userVariables = userData.variableData.variables;
-                const userDataItems = userData.dataItems;
-                if (userTimelinePoints) {
-                    this.props.setTimelinePoints(userTimelinePoints.timelinePoints);
-                    this.props.setTimelinePoint(userTimelinePoints.timelinePoint);
-                }
-                if (userVariables) {
-                    this.props.setVariables(userVariables);
+                    if (userData) {
+                    const userTimelinePoints = userData.timelineData;
+                    const userVariables = userData.variableData;
+                    const userDataItems = userData.dataItems;
+                    if (userTimelinePoints) {
+                        this.props.setTimelinePoints(userTimelinePoints.timelinePoints);
+                        this.props.setTimelinePoint(userTimelinePoints.timelinePoint);
+                    }
+                    if (userVariables) {
+                        this.props.setVariables(userVariables.variables);
+                    }
+                    if (userDataItems) {
+                        this.props.updateDataItem(userDataItems);
+                    } else {
+                        this.props.firebase.setUserDataItems(newDataItems);
+                    }
+                } else {
+                    this.props.firebase.setTimelinePoints(timelinePoints, timelinePoint);
+                    this.props.firebase.setVariables(variables);
+                    this.props.firebase.setUserDataItems(newDataItems);
                 }
             });
             // All data initialization done, set "data initialized"
@@ -147,10 +160,11 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "SET_TIMELINE_POINTS", timelinePoints }),
     setTimelinePoint: timelinePoint =>
         dispatch({ type: "SET_TIMELINE_POINT", timelinePoint }),
-    createDataItem: dataItem =>
-        dispatch({ type: "CREATE_DATA_ITEM", dataItem }),
+    createDataItem:  newDataItems =>
+        dispatch({ type: "CREATE_DATA_ITEM", newDataItems }),
     setDataInitialized: () =>
         dispatch({ type: "SET_DATA_INITIALIZED" }),
+    updateDataItem: newDataItems => dispatch({ type: "UPDATE_DATA_ITEM", newDataItems }),
 });
 
 export default compose(
