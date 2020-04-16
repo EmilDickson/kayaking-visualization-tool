@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { Tracker } from "react-tracker";
+import { Tracker, TrackerProvider } from "react-tracker";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./index.css";
@@ -14,11 +14,13 @@ import Firebase, { FirebaseContext } from "./components/Firebase";
 const tracker = new Tracker();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <FirebaseContext.Provider value={new Firebase()}>
-      <App />
-    </FirebaseContext.Provider>
-  </Provider>,
+  <TrackerProvider tracker={tracker}>
+    <Provider store={store}>
+      <FirebaseContext.Provider value={new Firebase()}>
+        <App />
+      </FirebaseContext.Provider>
+    </Provider>
+  </TrackerProvider>,
   document.getElementById("root")
 );
 

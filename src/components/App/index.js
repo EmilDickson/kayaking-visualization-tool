@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "recompose";
+import { withTracking } from "react-tracker";
 
 import { withFirebase } from "../Firebase";
+import { pageViewEvent } from "../../tracking/events";
 import Navigation from "../Navigation";
 import Variables from "../Variables";
 import LandingPage from "../Landing";
@@ -28,6 +30,7 @@ import { createHelper } from "../../dataItemTools";
 
 class App extends Component {
     componentDidMount() {
+        this.props.trackPageView(this.props.pageId, this.props.userId);
         this.props.firebase.allData().on("value", snapshot => {
             const data = snapshot.val();
             this.props.setData(data);
@@ -145,6 +148,10 @@ class App extends Component {
     }
 }
 
+const mapTrackingToProps = trackEvent => ({
+    trackPageView: (pageId, userId) => trackEvent(pageViewEvent(pageId, userId))
+})
+
 const mapStateToProps = state => ({
     data: state.dataState.data
 });
@@ -168,6 +175,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
+    withTracking(mapTrackingToProps),
     withFirebase,
     withAuthentication,
     connect(mapStateToProps, mapDispatchToProps)
