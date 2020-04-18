@@ -127,7 +127,6 @@ class DataItem extends Component {
         } = this.props;
         if (dataInitialized) {
             const lineChartSettings = this.generateLineChart();
-            console.log(lineChartSettings);
             return (
                 <div className='dataItem'>
                     <div
@@ -211,6 +210,7 @@ class DataItem extends Component {
                                 <div className="miniLineChartLegend">
                                     <p style={{ color: 'blue' }}>Entire set</p>
                                     <p style={{ color: 'green', fontWeight: 'bold' }}>Selection</p>
+                                    <p>{"Current: " + dataItem.selectedPoint.speed}</p>
                                 </div>
                             </div>
                             <hr />
