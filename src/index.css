@@ -488,3 +488,27 @@ button {
 .bubbleChartTooltip {
   margin: 10px;
 }
+
+.miniLineChart {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+}
+
+.miniLineChartLegend {
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.chartist-mini-speed-all {
+  stroke: blue;
+}
+
+.chartist-mini-speed-selection .ct-line {
+  stroke-width: 3px !important;
+}
+
+.chartist-mini-speed-selection {
+  stroke: green;
+}
