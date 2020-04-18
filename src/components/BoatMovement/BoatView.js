@@ -60,7 +60,7 @@ class BoatView extends Component {
         let points = [];
         for (let i = 0; i < divider; i++) {
             const angle = value > 0 ? -Math.PI + (Math.PI/64)*i : -Math.PI - (Math.PI/64)*i;
-            points.push([x + 50 * Math.cos(angle), y + 50 * Math.sin(angle)]);
+            points.push([x - 50 * Math.cos(angle), y - 50 * Math.sin(angle)]);
         }
         return points;
     }
@@ -68,7 +68,7 @@ class BoatView extends Component {
     createXEllipse = (x, y, divider, value) => {
         let points = [];
         for (let i = 0; i < divider; i++) {
-            const angle = value > 0 ? -Math.PI/2 - (Math.PI/64)*i : -Math.PI/2 + (Math.PI/64)*i;
+            let angle = value > 0 ? Math.PI/2 - (Math.PI/64)*i : Math.PI/2 + (Math.PI/64)*i;
             points.push([x + 50 * Math.cos(angle), y + 35 * Math.sin(angle)]);
         }
         return points;
@@ -144,8 +144,8 @@ class BoatView extends Component {
         const yAcc = this.lineMultiplier("yAcc");
         const speed = this.lineMultiplier("speed");
         const zEllipse = this.createEllipse({ x: 248, y: 222}, "zGyro");
-        const yEllipse = this.createEllipse({ x: 745, y: 222}, "yGyro");
-        const xEllipse = this.createEllipse({ x: 745, y: 190}, "xGyro");
+        const yEllipse = this.createEllipse({ x: 770, y: 222}, "yGyro");
+        const xEllipse = this.createEllipse({ x: 731, y: 222}, "xGyro");
         return (
             <div className='boatViewContainer'>
                 <div className='backAndTopView'>
@@ -181,21 +181,21 @@ class BoatView extends Component {
                             backgroundImage:
                                 "url(" +
                                 process.env.PUBLIC_URL +
-                                "/TopBackBG/TopView.png)",
+                                "/TopBackBG/TopViewR.png)",
                             backgroundRepeat: "no-repeat"
                         }}
                     >
                         <Line
                             position='fixed'
-                            from={[740, 220]}
-                            to={[740 - Math.round(130 * speed), 220]}
+                            from={[732, 220]}
+                            to={[732 + Math.round(130 * speed), 220]}
                             color='cyan'
                             lineWeight={8}
                         />
                         <Line
                             position='fixed'
-                            from={[(yAcc > 0 ? 743 : 748), 222]}
-                            to={[(yAcc > 0 ? 743 : 748) - Math.round(130 * yAcc), 222]}
+                            from={[(yAcc > 0 ? 732 : 727), 222]}
+                            to={[(yAcc > 0 ? 732 : 727) + Math.round(130 * yAcc), 222]}
                             color='purple'
                             lineWeight={5}
                         />
