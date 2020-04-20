@@ -13,9 +13,6 @@ const Navigation = ({ authUser }) => (
 
 const NavigationAuth = ({ authUser }) => (
   <DropdownButton alignRight title="menu" id="dropdown-menu-align-right" className="navigation">
-    <Dropdown.Item href={ROUTES.LANDING}>
-      Landing
-    </Dropdown.Item>
     <Dropdown.Item href={ROUTES.HOME}>
       Home
     </Dropdown.Item>
