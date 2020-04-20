@@ -51,10 +51,15 @@ class BubbleChart extends Component {
     generateChartOptions = (side) => {
         const { maxInDataSelection, minInDataSelection } = this.props;
         return {
-            dataLabels: {
-                enabled: false,
+            chart: {
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: false
+                }
             },
-            animations: {
+            dataLabels: {
                 enabled: false,
             },
             fill: {
@@ -64,9 +69,6 @@ class BubbleChart extends Component {
             title: {
                 text: side === "left" ? "Acceleration" : "Rotation",
                 align: 'center',
-            },
-            toolbar: {
-                show: false,
             },
             xaxis: {
                 title: { text: side === "left" ? "xAcc" : "xGyro" },
