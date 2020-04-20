@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import Loading from "../Loading";
 import Map from "./Map";
 
 class BoatRoute extends Component {
@@ -12,24 +13,31 @@ class BoatRoute extends Component {
         return list_of_points;
     };
     render() {
-        const { data, withRouteHighlight, type, dataItem } = this.props;
+        const { data, withRouteHighlight, type, dataItem, dataInitialized } = this.props;
         const coordinates = this.getAllPoints(data);
         const middlePoint = Math.round(coordinates.length / 4);
-        return (
-            <Map
-                lat={coordinates[middlePoint][1]}
-                long={coordinates[middlePoint][0]}
-                coordinates={coordinates}
-                withRouteHighlight={withRouteHighlight}
-                type={type}
-                dataItem={dataItem}
-            />
-        );
+        if (dataInitialized) {
+            return (
+                <Map
+                    lat={coordinates[middlePoint][1]}
+                    long={coordinates[middlePoint][0]}
+                    coordinates={coordinates}
+                    withRouteHighlight={withRouteHighlight}
+                    type={type}
+                    dataItem={dataItem}
+                />
+            );
+        } else {
+            return (
+                <Loading />
+            )
+        }
     }
 }
 
 const mapStateToProps = state => ({
     data: state.dataState.data,
+    dataInitialized: state.dataState.dataInitialized,
 });
 
 export default connect(mapStateToProps)(BoatRoute);
