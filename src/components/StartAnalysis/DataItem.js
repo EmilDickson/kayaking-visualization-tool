@@ -63,13 +63,14 @@ class DataItem extends Component {
             ],
         };
         const length = data.length;
+        const itemLength = dataItem.data.length;
         let selectionIndex = 0;
         for (let i = 1; i < length; i++) {
             dataOut.labels.push(i.toString());
             dataOut.series[0].data.push(
                 { meta: "speed-all", value: data[i]["speed"] },
             );
-            if (i >= timePoints[0] && i < timePoints[2]) {
+            if (i >= timePoints[0] && i < timePoints[2] && selectionIndex < itemLength) {
                 dataOut.series[1].data.push(
                     {
                         meta: "speed-selection",
@@ -208,6 +209,7 @@ class DataItem extends Component {
                                     type={lineChartSettings.type}
                                 />
                                 <div className="miniLineChartLegend">
+                                    <p style={{ fontStyle: 'italic' }}>Speed: </p>
                                     <p style={{ color: 'blue' }}>Entire set</p>
                                     <p style={{ color: 'green', fontWeight: 'bold' }}>Selection</p>
                                     <p>{"Current: " + dataItem.selectedPoint.speed}</p>
